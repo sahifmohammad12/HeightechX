@@ -16,44 +16,30 @@ import { useWallet } from '../../contexts/WalletContext'
 
 const IconWrapper = ({ Icon }) => {
   const [isClicked, setIsClicked] = useState(false)
-  const [ripples, setRipples] = useState([])
-  const [particles, setParticles] = useState([])
+  const [popups, setPopups] = useState([])
   const iconRef = useRef(null)
 
   const handleMouseDown = (e) => {
     setIsClicked(true)
     
-    // Create ripple effect
-    const rect = e.currentTarget.getBoundingClientRect()
-    const ripple = {
+    // Create pop-up effect
+    const popup = {
       id: Date.now(),
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      scale: 0,
     }
-    setRipples([...ripples, ripple])
+    setPopups([...popups, popup])
 
-    // Create particle burst effect
-    const particleCount = 8
-    const newParticles = []
-    for (let i = 0; i < particleCount; i++) {
-      const angle = (i / particleCount) * Math.PI * 2
-      newParticles.push({
-        id: `${ripple.id}-${i}`,
-        angle,
-        distance: 0,
-      })
-    }
-    setParticles([...particles, ...newParticles])
-
-    // Remove ripple after animation
+    // Animate pop-up
     setTimeout(() => {
-      setRipples(r => r.filter(rip => rip.id !== ripple.id))
-    }, 600)
+      setPopups(prev => 
+        prev.map(p => p.id === popup.id ? { ...p, scale: 1 } : p)
+      )
+    }, 50)
 
-    // Remove particles after animation
+    // Remove popup after animation
     setTimeout(() => {
-      setParticles(p => p.filter(par => !par.id.startsWith(ripple.id)))
-    }, 800)
+      setPopups(p => p.filter(pop => pop.id !== popup.id))
+    }, 700)
   }
 
   const handleMouseUp = () => {
@@ -62,57 +48,39 @@ const IconWrapper = ({ Icon }) => {
 
   return (
     <div className="relative inline-flex items-center justify-center cursor-pointer">
+      {/* Pop-up rings */}
+      {popups.map(popup => (
+        <div
+          key={popup.id}
+          className="absolute rounded-full border-2 border-primary-400 pointer-events-none"
+          style={{
+            width: '30px',
+            height: '30px',
+            transform: `scale(${popup.scale})`,
+            opacity: 1 - popup.scale,
+            animation: 'popup-expand 0.7s ease-out forwards',
+            left: '50%',
+            top: '50%',
+            marginLeft: '-15px',
+            marginTop: '-15px',
+          }}
+        />
+      ))}
+
       <Icon 
         ref={iconRef}
         className={`w-5 h-5 transition-all duration-300 ${
-          isClicked ? 'scale-140 rotate-45 brightness-150' : 'scale-100 rotate-0'
+          isClicked ? 'scale-150 animate-bounce' : 'scale-100'
         }`}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       />
       
-      {/* Ripple effect */}
-      {ripples.map(ripple => (
-        <div
-          key={ripple.id}
-          className="absolute rounded-full bg-primary-400 pointer-events-none"
-          style={{
-            width: '20px',
-            height: '20px',
-            left: `${ripple.x}px`,
-            top: `${ripple.y}px`,
-            transform: 'translate(-50%, -50%)',
-            animation: 'ripple 0.6s ease-out',
-            opacity: 0.5,
-          }}
-        />
-      ))}
-
-      {/* Particle burst effect */}
-      {particles.map(particle => {
-        const distance = isClicked ? 30 : 0
-        const x = Math.cos(particle.angle) * distance
-        const y = Math.sin(particle.angle) * distance
-        return (
-          <div
-            key={particle.id}
-            className="absolute w-1 h-1 rounded-full bg-primary-500 pointer-events-none"
-            style={{
-              left: '50%',
-              top: '50%',
-              transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-              animation: 'particle-burst 0.8s ease-out forwards',
-              opacity: isClicked ? 0.8 : 0,
-            }}
-          />
-        )
-      })}
-
-      {/* Glow effect */}
+      {/* Pop background glow */}
       <div
         className={`absolute inset-0 rounded-full transition-all duration-300 ${
-          isClicked ? 'bg-primary-400 opacity-30 scale-150' : 'bg-primary-400 opacity-0 scale-100'
+          isClicked ? 'bg-primary-400 opacity-40 scale-200 blur-sm' : 'bg-primary-400 opacity-0 scale-100'
         }`}
         style={{
           pointerEvents: 'none',
