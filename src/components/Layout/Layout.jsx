@@ -244,7 +244,6 @@ const Layout = ({ children }) => {
               </button>
             )}
           </div>
-        </div>
       </aside>
 
       {/* Main content */}
