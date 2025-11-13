@@ -99,7 +99,7 @@ const Layout = ({ children }) => {
   }
 
   return (
-    <div className="min-h-screen" style={{background: 'linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f4c3a 100%)', perspective: '1200px'}}>
+    <div className="min-h-screen" style={{background: 'var(--background)', perspective: '1200px'}}>
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div 
@@ -115,18 +115,18 @@ const Layout = ({ children }) => {
         lg:translate-x-0
       `}
       style={{
-        background: 'linear-gradient(180deg, #0a0e27 0%, #1a1f3a 50%, #0f4c3a 100%)',
-        borderRight: '2px solid #00d9ff',
-        boxShadow: '2px 0 30px rgba(0, 217, 255, 0.2)'
+        background: 'linear-gradient(180deg, var(--secondary) 0%, rgba(4,16,23,0.7) 40%)',
+        borderRight: '2px solid var(--primary)',
+        boxShadow: '2px 0 30px rgba(0,255,160,0.06)'
       }}>
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center justify-between p-4" style={{borderBottom: '2px solid rgba(0, 217, 255, 0.3)'}}>
+          <div className="flex items-center justify-between p-4" style={{borderBottom: '2px solid rgba(0,255,160,0.06)'}}>
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #00d9ff, #00ff41)', boxShadow: '0 0 15px rgba(0, 217, 255, 0.6)'}}>
-                <Shield className="w-5 h-5 text-gray-900" />
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, var(--primary), var(--accent))', boxShadow: '0 0 18px rgba(0,255,160,0.08)'}}>
+                <Shield className="w-5 h-5" style={{color: '#001014'}} />
               </div>
-              <span className="text-xl font-bold" style={{color: '#00d9ff', textShadow: '0 0 10px rgba(0, 217, 255, 0.5)'}}>TruelDent</span>
+              <span className="text-xl font-bold" style={{color: 'var(--primary)', textShadow: '0 0 10px rgba(0,255,160,0.12)'}}>TruelDent</span>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -147,31 +147,31 @@ const Layout = ({ children }) => {
                   to={item.href}
                   onClick={() => setSidebarOpen(false)}
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    padding: '12px 16px',
-                    borderRadius: '8px',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer',
-                    color: active ? '#00ff41' : '#00d9ff',
-                    background: active ? 'rgba(0, 255, 65, 0.1)' : 'rgba(0, 217, 255, 0.05)',
-                    border: active ? '1px solid #00ff41' : '1px solid rgba(0, 217, 255, 0.2)',
-                    boxShadow: active ? '0 0 15px rgba(0, 255, 65, 0.3)' : 'none',
-                    fontWeight: active ? '600' : '500'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(0, 217, 255, 0.15)';
-                    e.currentTarget.style.border = '1px solid #00d9ff';
-                    e.currentTarget.style.boxShadow = '0 0 10px rgba(0, 217, 255, 0.3)';
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.background = 'rgba(0, 217, 255, 0.05)';
-                      e.currentTarget.style.border = '1px solid rgba(0, 217, 255, 0.2)';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }
-                  }}
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      padding: '12px 16px',
+                      borderRadius: '8px',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer',
+                      color: active ? 'var(--accent)' : 'var(--primary)',
+                      background: active ? 'rgba(0,255,106,0.08)' : 'transparent',
+                      border: active ? '1px solid var(--accent)' : '1px solid rgba(255,255,255,0.02)',
+                      boxShadow: active ? '0 0 15px rgba(0,255,160,0.12)' : 'none',
+                      fontWeight: active ? '600' : '500'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(0,255,160,0.04)';
+                      e.currentTarget.style.border = '1px solid var(--primary)';
+                      e.currentTarget.style.boxShadow = '0 0 10px rgba(0,255,160,0.06)';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!active) {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.border = '1px solid rgba(255,255,255,0.02)';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }
+                    }}
                 >
                   <IconWrapper Icon={Icon} />
                   <span>{item.name}</span>
@@ -181,35 +181,35 @@ const Layout = ({ children }) => {
           </nav>
 
           {/* Wallet Connection */}
-          <div style={{padding: '16px', borderTop: '2px solid rgba(0, 217, 255, 0.3)'}}>
+          <div style={{padding: '16px', borderTop: '1px solid rgba(255,255,255,0.02)'}}>
             {account ? (
               <div className="space-y-2">
                 <div style={{display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#00ff41'}}>
                   <Wallet className="w-4 h-4" />
-                  <span className="truncate" style={{textShadow: '0 0 5px rgba(0, 255, 65, 0.5)'}}>{account.slice(0, 6)}...{account.slice(-4)}</span>
+                  <span className="truncate" style={{textShadow: '0 0 6px rgba(0,255,160,0.12)', color: 'var(--accent)'}}>{account.slice(0, 6)}...{account.slice(-4)}</span>
                 </div>
                 <button
                   onClick={disconnectWallet}
                   style={{
                     width: '100%',
                     padding: '10px',
-                    backgroundColor: 'rgba(255, 23, 68, 0.15)',
-                    color: '#ff1744',
-                    border: '1px solid #ff1744',
+                    backgroundColor: 'rgba(255, 23, 68, 0.06)',
+                    color: '#ff6b74',
+                    border: '1px solid rgba(255,107,116,0.14)',
                     borderRadius: '6px',
                     fontSize: '14px',
                     fontWeight: '600',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
-                    boxShadow: '0 0 10px rgba(255, 23, 68, 0.2)'
+                    boxShadow: '0 0 10px rgba(255, 23, 68, 0.06)'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 23, 68, 0.25)';
-                    e.currentTarget.style.boxShadow = '0 0 15px rgba(255, 23, 68, 0.4)';
+                    e.currentTarget.style.background = 'rgba(255,107,116,0.12)';
+                    e.currentTarget.style.boxShadow = '0 0 15px rgba(255,107,116,0.14)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 23, 68, 0.15)';
-                    e.currentTarget.style.boxShadow = '0 0 10px rgba(255, 23, 68, 0.2)';
+                    e.currentTarget.style.background = 'rgba(255,23,68,0.06)';
+                    e.currentTarget.style.boxShadow = '0 0 10px rgba(255,107,116,0.06)';
                   }}
                 >
                   Disconnect
@@ -221,22 +221,22 @@ const Layout = ({ children }) => {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  background: 'linear-gradient(135deg, #00d9ff, #00ff41)',
-                  color: '#0a0e27',
+                  background: 'linear-gradient(135deg, var(--primary), var(--accent))',
+                  color: '#001014',
                   border: 'none',
                   borderRadius: '6px',
                   fontSize: '14px',
                   fontWeight: '700',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 0 20px rgba(0, 217, 255, 0.6)'
+                  boxShadow: '0 0 26px rgba(0,255,160,0.08)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 0 30px rgba(0, 217, 255, 0.8)';
+                  e.currentTarget.style.boxShadow = '0 0 40px rgba(0,255,160,0.12)';
                   e.currentTarget.style.transform = 'scale(1.02)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 0 20px rgba(0, 217, 255, 0.6)';
+                  e.currentTarget.style.boxShadow = '0 0 26px rgba(0,255,160,0.08)';
                   e.currentTarget.style.transform = 'scale(1)';
                 }}
               >
@@ -250,18 +250,19 @@ const Layout = ({ children }) => {
       {/* Main content */}
       <div className="lg:ml-64">
         {/* Top bar */}
-        <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
+        <header className="sticky top-0 z-10" style={{background: 'rgba(0,4,10,0.6)', borderBottom: '1px solid rgba(255,255,255,0.02)'}}>
           <div className="flex items-center justify-between px-6 py-4">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden text-gray-500 hover:text-gray-700"
+              className="lg:hidden"
+              style={{color: 'var(--text)'}}
             >
               <Menu className="w-6 h-6" />
             </button>
-            <div className="flex-1" />
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Security-First Identity Platform</span>
+            <div className="flex items-center gap-4">
+              <span style={{color: 'var(--text)'}} className="text-sm">Security-First Identity Platform</span>
             </div>
+            <div className="flex-1" />
           </div>
         </header>
 
