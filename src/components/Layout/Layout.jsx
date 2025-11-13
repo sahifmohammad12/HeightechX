@@ -121,7 +121,7 @@ const Layout = ({ children }) => {
       }}>
         <div className="flex flex-col h-full">
           {/* Logo */}
-              <span className="text-xl font-bold text-gray-900">TruelDent</span>ottom: '2px solid rgba(0, 217, 255, 0.3)'}}>
+          <div className="flex items-center justify-between p-4" style={{borderBottom: '2px solid rgba(0, 217, 255, 0.3)'}}>
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #00d9ff, #00ff41)', boxShadow: '0 0 15px rgba(0, 217, 255, 0.6)'}}>
                 <Shield className="w-5 h-5 text-gray-900" />
@@ -244,6 +244,7 @@ const Layout = ({ children }) => {
               </button>
             )}
           </div>
+        </div>
       </aside>
 
       {/* Main content */}
