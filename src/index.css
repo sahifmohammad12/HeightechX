@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --primary: #2563eb;
-    --secondary: #e2e8f0;
-    --accent: #10b981;
-    --background: linear-gradient(135deg, #2563eb 0%, #60a5fa 50%, #86efac 100%);
-    --text: #111827;
+    --primary: #00d9ff;
+    --secondary: #0a0e27;
+    --accent: #00ff41;
+    --background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f4c3a 100%);
+    --text: #00ffff;
   }
 
   html {
@@ -16,8 +16,8 @@
   }
 
   body {
-    background: linear-gradient(135deg, #2563eb 0%, #60a5fa 50%, #86efac 100%);
-    color: #111827;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f4c3a 100%);
+    color: #00ffff;
     min-height: 100vh;
   }
 
@@ -144,10 +144,17 @@
   /* Card Components */
   .card {
     @apply bg-blue-50 rounded-xl shadow-md p-6 border border-blue-100 transition-all duration-300 hover:shadow-lg;
+    background: rgba(10, 14, 39, 0.8);
+    border: 2px solid #00d9ff;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.3), inset 0 0 10px rgba(0, 217, 255, 0.1);
+    transform-style: preserve-3d;
+    perspective: 1000px;
   }
 
   .card:hover {
-    @apply border-blue-200;
+    border: 2px solid #00ff41;
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.5), inset 0 0 15px rgba(0, 255, 65, 0.2);
+    transform: translateZ(10px) rotateX(2deg) rotateY(2deg);
   }
 
   /* Input Fields */
