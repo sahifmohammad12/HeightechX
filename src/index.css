@@ -53,5 +53,10 @@
   .badge-accent {
     @apply bg-accent-100 text-accent-700;
   }
+
+  /* Icon Animation on Click */
+  .icon-clickable {
+    @apply cursor-pointer transition-all duration-200 active:scale-125;
+  }
 }
 

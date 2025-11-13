@@ -14,6 +14,29 @@ import {
 } from 'lucide-react'
 import { useWallet } from '../../contexts/WalletContext'
 
+const IconWrapper = ({ Icon }) => {
+  const [isClicked, setIsClicked] = useState(false)
+
+  const handleMouseDown = () => {
+    setIsClicked(true)
+  }
+
+  const handleMouseUp = () => {
+    setIsClicked(false)
+  }
+
+  return (
+    <Icon 
+      className={`w-5 h-5 transition-all duration-200 ${
+        isClicked ? 'scale-125' : 'scale-100'
+      }`}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+    />
+  )
+}
+
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
@@ -80,14 +103,14 @@ const Layout = ({ children }) => {
                   to={item.href}
                   onClick={() => setSidebarOpen(false)}
                   className={`
-                    flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors
+                    flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors cursor-pointer
                     ${active 
                       ? 'bg-primary-50 text-primary-700 font-medium' 
                       : 'text-gray-700 hover:bg-gray-100'
                     }
                   `}
                 >
-                  <Icon className="w-5 h-5" />
+                  <IconWrapper Icon={Icon} />
                   <span>{item.name}</span>
                 </Link>
               )
