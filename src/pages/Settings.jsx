@@ -156,15 +156,15 @@ const Settings = () => {
       </div>
 
       {/* Data Management */}
-      <div className="card border-red-200 bg-gradient-to-br from-red-50 to-orange-50">
+      <div className="rounded-xl border-2 border-accent-500 p-6 shadow-lg" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 30px rgba(0, 255, 106, 0.06), inset 0 0 12px rgba(0, 255, 106, 0.03)' }}>
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 rounded-xl bg-red-600 text-white flex items-center justify-center">
             <Trash2 className="w-6 h-6" />
           </div>
-          <h2 className="text-2xl font-bold text-dark-900">Data Management</h2>
+          <h2 className="text-2xl font-bold text-white">Data Management</h2>
         </div>
         <div className="space-y-4">
-          <p className="text-dark-900">
+          <p className="text-blue-100">
             Clear all locally stored data including credentials, DID information, and settings.
             <span className="block text-red-600 font-semibold mt-2">⚠️ This action cannot be undone.</span>
           </p>

@@ -253,31 +253,31 @@ const Verification = () => {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="card bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200 text-center">
-          <Shield className="w-8 h-8 text-primary-600 mx-auto mb-2" />
-          <p className="font-semibold text-dark-900 text-sm">Trusted Network</p>
-          <p className="text-xs text-secondary-600 mt-1">Verified against blockchain</p>
+        <div className="rounded-xl border-2 border-primary-500 p-6 text-center shadow-lg" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 20px rgba(0, 255, 200, 0.06)' }}>
+          <Shield className="w-8 h-8 mx-auto mb-2" style={{ color: 'var(--primary)' }} />
+          <p className="font-semibold text-white text-sm">Trusted Network</p>
+          <p className="text-xs text-blue-200 mt-1">Verified against blockchain</p>
         </div>
 
-        <div className="card bg-gradient-to-br from-accent-50 to-green-100 border-accent-200 text-center">
-          <Lock className="w-8 h-8 text-accent-600 mx-auto mb-2" />
-          <p className="font-semibold text-dark-900 text-sm">Cryptographic Proof</p>
-          <p className="text-xs text-secondary-600 mt-1">DID signature validation</p>
+        <div className="rounded-xl border-2 border-accent-500 p-6 text-center shadow-lg" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 20px rgba(0, 255, 106, 0.06)' }}>
+          <Lock className="w-8 h-8 mx-auto mb-2" style={{ color: 'var(--accent)' }} />
+          <p className="font-semibold text-white text-sm">Cryptographic Proof</p>
+          <p className="text-xs text-blue-200 mt-1">DID signature validation</p>
         </div>
 
-        <div className="card bg-gradient-to-br from-primary-50 to-accent-100 border-primary-200 text-center">
-          <AlertCircle className="w-8 h-8 text-primary-600 mx-auto mb-2" />
-          <p className="font-semibold text-dark-900 text-sm">Real-time Verification</p>
-          <p className="text-xs text-secondary-600 mt-1">Instant credential validation</p>
+        <div className="rounded-xl border-2 border-primary-500 p-6 text-center shadow-lg" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 20px rgba(0, 255, 200, 0.06)' }}>
+          <AlertCircle className="w-8 h-8 mx-auto mb-2" style={{ color: 'var(--primary)' }} />
+          <p className="font-semibold text-white text-sm">Real-time Verification</p>
+          <p className="text-xs text-blue-200 mt-1">Instant credential validation</p>
         </div>
       </div>
 
-      <div className="card bg-gradient-to-r from-primary-50 to-accent-50 border-primary-200">
+      <div className="rounded-xl border-2 border-primary-500 p-6 shadow-lg" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 30px rgba(0, 255, 200, 0.06), inset 0 0 12px rgba(0, 255, 200, 0.03)' }}>
         <div className="flex items-start gap-4">
-          <AlertCircle className="w-6 h-6 text-primary-600 flex-shrink-0 mt-0.5" />
+          <AlertCircle className="w-6 h-6 flex-shrink-0 mt-0.5" style={{ color: 'var(--primary)' }} />
           <div>
-            <h4 className="font-bold text-dark-900 mb-1">Verification Best Practices</h4>
-            <ul className="text-sm text-secondary-700 space-y-1">
+            <h4 className="font-bold text-white mb-1">Verification Best Practices</h4>
+            <ul className="text-sm text-blue-100 space-y-1">
               <li>• Always verify credentials before accepting them</li>
               <li>• Check the issuer's DID on the blockchain</li>
               <li>• Ensure the credential has not expired</li>

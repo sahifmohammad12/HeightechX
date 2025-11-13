@@ -36,12 +36,12 @@ const CredentialUpload = () => {
           <ArrowLeft className="w-5 h-5" />
           Back
         </button>
-        <div className="card bg-gradient-to-br from-primary-50 to-accent-50 border-primary-200 text-center py-16">
+        <div className="rounded-xl border-2 border-primary-500 p-6 text-center py-16 shadow-lg" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 30px rgba(0, 255, 200, 0.06), inset 0 0 12px rgba(0, 255, 200, 0.03)' }}>
           <div className="w-20 h-20 rounded-full bg-primary-500 text-white flex items-center justify-center mx-auto mb-6 shadow-lg">
             <AlertCircle className="w-10 h-10" />
           </div>
-          <h3 className="text-2xl font-bold text-dark-900 mb-2">DID Required</h3>
-          <p className="text-secondary-600 mb-8 text-lg">
+          <h3 className="text-2xl font-bold text-white mb-2">DID Required</h3>
+          <p className="text-blue-200 mb-8 text-lg">
             Generate your Decentralized Identifier first
           </p>
         </div>
