@@ -28,8 +28,8 @@ const WelcomeCard = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-4xl font-bold mb-2">Welcome, {userName}! 👋</h2>
-            <p className="text-primary-100">Your decentralized identity vault</p>
+            <h2 className="text-4xl font-bold mb-2">Welcome to DIDify 👋</h2>
+            <p className="text-primary-100">Your decentralized identity wallet</p>
           </div>
           <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center">
             <User className="w-8 h-8 text-white" />

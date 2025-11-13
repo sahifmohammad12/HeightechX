@@ -121,7 +121,7 @@ const Layout = ({ children }) => {
               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
                 <Shield className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">DID Vault</span>
+              <span className="text-xl font-bold text-gray-900">DIDify</span>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -196,7 +196,7 @@ const Layout = ({ children }) => {
             </button>
             <div className="flex-1" />
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">Decentralized Identity Vault</span>
+              <span className="text-sm text-gray-600">Decentralized Identity Wallet</span>
             </div>
           </div>
         </header>
