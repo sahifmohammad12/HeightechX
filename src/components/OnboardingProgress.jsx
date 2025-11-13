@@ -50,23 +50,23 @@ const OnboardingProgress = () => {
   const progressPercentage = (completedSteps / steps.length) * 100
 
   return (
-    <div className="bg-white rounded-2xl border border-secondary-200 p-8 shadow-lg">
+    <div className="rounded-2xl border-2 border-primary-500 p-8 shadow-lg" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 30px rgba(0, 255, 200, 0.06), inset 0 0 12px rgba(0, 255, 200, 0.03)' }}>
       {/* Header */}
       <div className="mb-8">
-        <h3 className="text-2xl font-bold text-dark-900 mb-2">Your Setup Journey</h3>
-        <p className="text-secondary-600">Complete these steps to unlock your decentralized identity</p>
+        <h3 className="text-2xl font-bold text-white mb-2">Your Setup Journey</h3>
+        <p className="text-blue-200">Complete these steps to unlock your decentralized identity</p>
       </div>
 
       {/* Progress Bar */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-dark-900">Progress</span>
-          <span className="text-sm font-bold text-primary-500">{completedSteps}/{steps.length}</span>
+          <span className="text-sm font-medium text-white">Progress</span>
+          <span className="text-sm font-bold" style={{ color: 'var(--primary)' }}>{completedSteps}/{steps.length}</span>
         </div>
-        <div className="w-full bg-secondary-200 rounded-full h-2 overflow-hidden">
+        <div className="w-full rounded-full h-2 overflow-hidden" style={{ background: 'rgba(0, 255, 200, 0.1)' }}>
           <div
-            className="bg-gradient-to-r from-primary-500 to-accent-500 h-full transition-all duration-500"
-            style={{ width: `${progressPercentage}%` }}
+            className="h-full transition-all duration-500"
+            style={{ width: `${progressPercentage}%`, background: 'linear-gradient(90deg, var(--primary), var(--accent))' }}
           ></div>
         </div>
       </div>

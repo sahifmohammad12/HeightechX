@@ -190,8 +190,8 @@ const SelectiveDisclosure = () => {
           </div>
 
           <div className="space-y-4">
-            <div className="p-4 bg-white rounded-xl border border-accent-200">
-              <p className="text-xs font-semibold text-accent-600 uppercase tracking-wide mb-3">Disclosed Fields</p>
+            <div className="p-4 rounded-xl border-2 border-primary-500" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 20px rgba(0, 255, 200, 0.06)' }}>
+              <p className="text-xs font-semibold uppercase tracking-wide mb-3" style={{ color: 'var(--primary)' }}>Disclosed Fields</p>
               <div className="flex flex-wrap gap-2">
                 {disclosureProof.disclosedFields.map(field => (
                   <span
@@ -204,8 +204,8 @@ const SelectiveDisclosure = () => {
               </div>
             </div>
 
-            <div className="p-4 bg-white rounded-xl border border-accent-200 font-mono text-sm overflow-x-auto max-h-48 overflow-y-auto">
-              <pre className="text-dark-900 whitespace-pre-wrap break-words">
+            <div className="p-4 rounded-xl border-2 border-primary-500 font-mono text-sm overflow-x-auto max-h-48 overflow-y-auto" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 20px rgba(0, 255, 200, 0.06)' }}>
+              <pre className="text-blue-100 whitespace-pre-wrap break-words">
                 {JSON.stringify(disclosureProof, null, 2)}
               </pre>
             </div>
