@@ -143,11 +143,11 @@
 
   /* Card Components */
   .card {
-    @apply bg-white rounded-xl shadow-md p-6 border border-secondary-200 transition-all duration-300 hover:shadow-lg;
+    @apply bg-blue-50 rounded-xl shadow-md p-6 border border-blue-100 transition-all duration-300 hover:shadow-lg;
   }
 
   .card:hover {
-    @apply border-primary-200;
+    @apply border-blue-200;
   }
 
   /* Input Fields */
