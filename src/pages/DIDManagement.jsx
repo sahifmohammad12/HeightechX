@@ -112,24 +112,24 @@ const DIDManagement = () => {
       ) : (
         <>
           {/* DID Display Card */}
-          <div className="card border-accent-200 bg-gradient-to-br from-accent-50 to-white">
+          <div className="card" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 30px rgba(0, 255, 200, 0.15), inset 0 0 12px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-xl font-bold text-dark-900 mb-1">Your DID</h3>
-                <p className="text-secondary-600">Active and verified on blockchain</p>
+                <h3 className="text-xl font-bold text-white mb-1" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>Your DID</h3>
+                <p className="text-blue-200">Active and verified on blockchain</p>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent-100 text-accent-700 font-semibold text-sm">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent-500 text-white font-semibold text-sm shadow-lg">
                 <Check className="w-4 h-4" />
                 Active
               </div>
             </div>
             <div className="flex items-center gap-2 mb-6">
-              <div className="flex-1 p-4 bg-dark-50 rounded-xl border border-secondary-200 font-mono text-sm break-all">
+              <div className="flex-1 p-4 bg-black/50 rounded-xl border border-primary-500 font-mono text-sm break-all text-white">
                 {did}
               </div>
               <button
                 onClick={() => copyToClipboard(did)}
-                className="p-3 hover:bg-primary-100 rounded-lg transition-all duration-200 text-primary-600 flex-shrink-0"
+                className="p-3 hover:bg-primary-500 rounded-lg transition-all duration-200 text-primary-400 hover:text-white flex-shrink-0"
                 title="Copy DID"
               >
                 {copied ? (
@@ -141,37 +141,37 @@ const DIDManagement = () => {
             </div>
 
             {/* DID Details Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-t border-secondary-200">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-t border-primary-500">
               <div>
-                <p className="text-sm font-semibold text-secondary-600 mb-2 uppercase tracking-wide">DID Method</p>
-                <p className="text-lg font-bold text-dark-900">ethr (Ethereum)</p>
+                <p className="text-sm font-semibold text-blue-200 mb-2 uppercase tracking-wide">DID Method</p>
+                <p className="text-lg font-bold text-white">ethr (Ethereum)</p>
               </div>
               <div>
-                <p className="text-sm font-semibold text-secondary-600 mb-2 uppercase tracking-wide">Verification Method</p>
-                <p className="text-sm text-dark-900 font-mono">EcdsaSecp256k1RecoveryMethod2020</p>
+                <p className="text-sm font-semibold text-blue-200 mb-2 uppercase tracking-wide">Verification Method</p>
+                <p className="text-sm text-white font-mono">EcdsaSecp256k1RecoveryMethod2020</p>
               </div>
               <div className="md:col-span-2">
-                <p className="text-sm font-semibold text-secondary-600 mb-2 uppercase tracking-wide">Controller Address</p>
-                <p className="text-sm text-dark-900 font-mono break-all">{account}</p>
+                <p className="text-sm font-semibold text-blue-200 mb-2 uppercase tracking-wide">Controller Address</p>
+                <p className="text-sm text-white font-mono break-all">{account}</p>
               </div>
             </div>
           </div>
 
           {/* DID Document */}
           {didDocument && (
-            <div className="card">
+            <div className="card" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 30px rgba(0, 255, 200, 0.15), inset 0 0 12px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
               <div className="flex items-center justify-between mb-4">
-                <h4 className="text-lg font-bold text-dark-900">DID Document</h4>
+                <h4 className="text-lg font-bold text-white" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>DID Document</h4>
                 <button
                   onClick={() => copyToClipboard(JSON.stringify(didDocument, null, 2))}
-                  className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-2 transition-colors"
+                  className="text-sm text-primary-400 hover:text-white flex items-center gap-2 transition-colors"
                 >
                   <Copy className="w-4 h-4" />
                   Copy JSON
                 </button>
               </div>
-              <div className="p-4 bg-dark-50 rounded-xl border border-secondary-200 overflow-x-auto">
-                <pre className="text-xs text-dark-900 font-mono">
+              <div className="p-4 bg-black/50 rounded-xl border border-primary-500 overflow-x-auto">
+                <pre className="text-xs text-white font-mono">
                   {JSON.stringify(didDocument, null, 2)}
                 </pre>
               </div>
@@ -195,28 +195,28 @@ const DIDManagement = () => {
           </div>
 
           {/* Info Box */}
-          <div className="card bg-gradient-to-br from-primary-50 to-accent-50 border-primary-200">
+          <div className="card" style={{ background: 'rgba(0, 0, 0, 0.95)', boxShadow: '0 0 50px rgba(0, 255, 200, 0.3), inset 0 0 20px rgba(0, 255, 200, 0.1)', border: '2px solid var(--primary)' }}>
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-lg bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-lg bg-primary-500 text-white flex items-center justify-center flex-shrink-0 shadow-lg" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.5)' }}>
                 <AlertCircle className="w-6 h-6" />
               </div>
               <div>
-                <h4 className="font-semibold text-dark-900 mb-2">What You Can Do With Your DID</h4>
-                <ul className="space-y-2 text-sm text-secondary-700">
+                <h4 className="font-semibold text-white mb-2" style={{ textShadow: '0 0 15px rgba(0, 255, 200, 0.8)' }}>What You Can Do With Your DID</h4>
+                <ul className="space-y-2 text-sm text-blue-100">
                   <li className="flex items-center gap-2">
-                    <ArrowRight className="w-4 h-4 text-primary-600" />
+                    <ArrowRight className="w-4 h-4 text-primary-300" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 255, 200, 0.5))' }} />
                     Issue and manage verifiable credentials
                   </li>
                   <li className="flex items-center gap-2">
-                    <ArrowRight className="w-4 h-4 text-primary-600" />
+                    <ArrowRight className="w-4 h-4 text-primary-300" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 255, 200, 0.5))' }} />
                     Prove your identity without revealing unnecessary data
                   </li>
                   <li className="flex items-center gap-2">
-                    <ArrowRight className="w-4 h-4 text-primary-600" />
+                    <ArrowRight className="w-4 h-4 text-primary-300" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 255, 200, 0.5))' }} />
                     Interact with systems that support DIDs
                   </li>
                   <li className="flex items-center gap-2">
-                    <ArrowRight className="w-4 h-4 text-primary-600" />
+                    <ArrowRight className="w-4 h-4 text-primary-300" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 255, 200, 0.5))' }} />
                     Control your digital presence independently
                   </li>
                 </ul>

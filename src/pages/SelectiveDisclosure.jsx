@@ -98,8 +98,8 @@ const SelectiveDisclosure = () => {
   return (
     <div className="space-y-8 pb-8">
       <div>
-        <h1 className="text-4xl font-bold text-dark-900 mb-2">Selective Disclosure</h1>
-        <p className="text-secondary-600 text-lg">
+        <h1 className="text-4xl font-bold text-white mb-2" style={{ textShadow: '0 0 15px rgba(0, 255, 200, 0.8)' }}>Selective Disclosure</h1>
+        <p className="text-blue-200 text-lg">
           Share only the information you choose to reveal
         </p>
       </div>
@@ -122,9 +122,9 @@ const SelectiveDisclosure = () => {
         })}
       </div>
 
-      <div className="card space-y-6">
+      <div className="card space-y-6" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 40px rgba(0, 255, 200, 0.2), inset 0 0 15px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
         <div>
-          <h3 className="text-xl font-bold text-dark-900 mb-4">1. Select Credential</h3>
+          <h3 className="text-xl font-bold text-white mb-4" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>1. Select Credential</h3>
           <select
             value={selectedCredential || ''}
             onChange={(e) => {
@@ -132,7 +132,8 @@ const SelectiveDisclosure = () => {
               setSelectedFields([])
               setDisclosureProof(null)
             }}
-            className="input-field w-full"
+            className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-100 transition-all text-white"
+            style={{ background: 'rgba(0,0,0,0.8)', border: '1px solid var(--primary)', boxShadow: '0 0 10px rgba(0, 255, 200, 0.2)' }}
           >
             <option value="">Choose a credential...</option>
             {credentials.map(cred => (

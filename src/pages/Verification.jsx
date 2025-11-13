@@ -105,31 +105,32 @@ const Verification = () => {
       <div className="card space-y-6">
         <div
           {...getRootProps()}
-          className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 cursor-pointer ${
-            isDragActive
-              ? 'border-primary-500 bg-primary-50'
-              : 'border-secondary-300 bg-secondary-50 hover:border-primary-500'
-          }`}
+          className="border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 cursor-pointer"
+          style={{
+            background: isDragActive ? 'rgba(10, 25, 47, 0.85)' : 'rgba(0, 4, 10, 0.85)',
+            borderColor: isDragActive ? 'var(--primary)' : 'rgba(0, 255, 209, 0.35)',
+            boxShadow: isDragActive ? '0 0 28px rgba(0, 255, 209, 0.35)' : '0 0 22px rgba(0, 255, 209, 0.18)'
+          }}
         >
           <input {...getInputProps()} />
-          <div className="w-16 h-16 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center mx-auto mb-4 shadow-lg">
             <Upload className="w-8 h-8" />
           </div>
           {uploadedFile ? (
             <>
-              <p className="text-lg font-semibold text-dark-900 mb-2">
+              <p className="text-lg font-semibold text-white mb-2">
                 {uploadedFile.name}
               </p>
-              <p className="text-sm text-secondary-600">
+              <p className="text-sm text-blue-200">
                 {(uploadedFile.size / 1024).toFixed(2)} KB
               </p>
             </>
           ) : (
             <>
-              <p className="text-lg font-semibold text-dark-900 mb-2">
+              <p className="text-lg font-semibold text-white mb-2">
                 {isDragActive ? 'Drop your credential here' : 'Upload a credential to verify'}
               </p>
-              <p className="text-sm text-secondary-600">
+              <p className="text-sm text-blue-200">
                 Drag & drop a JSON credential file or click to browse
               </p>
             </>

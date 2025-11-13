@@ -5,9 +5,9 @@
 @layer base {
   :root {
     --primary: #00ffd1; /* neon bluish-cyan */
-    --secondary: #00040a; /* near black */
+    --secondary: #000000; /* black */
     --accent: #00ff6a; /* neon green */
-    --background: linear-gradient(180deg, #00040a 0%, #041017 40%, #061214 100%);
+    --background: #000000; /* solid black */
     --text: #bffcf0; /* soft neon text */
   }
 

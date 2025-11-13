@@ -32,38 +32,38 @@ const Settings = () => {
     <div className="space-y-8 pb-8">
       {/* Header */}
       <div>
-        <h1 className="text-4xl font-bold text-dark-900 mb-2">Settings</h1>
-        <p className="text-secondary-600 text-lg">
+        <h1 className="text-4xl font-bold text-white mb-2" style={{ textShadow: '0 0 15px rgba(0, 255, 200, 0.8)' }}>Settings</h1>
+        <p className="text-blue-200 text-lg">
           Manage your account settings and preferences
         </p>
       </div>
 
       {/* Wallet Settings */}
-      <div className="card">
+      <div className="card" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 40px rgba(0, 255, 200, 0.2), inset 0 0 15px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.5)' }}>
             <Wallet className="w-6 h-6" />
           </div>
-          <h2 className="text-2xl font-bold text-dark-900">Wallet Connection</h2>
+          <h2 className="text-2xl font-bold text-white" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>Wallet Connection</h2>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-dark-900 mb-3 uppercase tracking-wide">
+            <label className="block text-sm font-semibold text-white mb-3 uppercase tracking-wide" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
               Connected Address
             </label>
             {account ? (
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 bg-gradient-to-r from-primary-50 to-accent-50 rounded-xl border border-primary-200">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 bg-black/50 rounded-xl border border-primary-500" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.1)' }}>
                 <div>
-                  <p className="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-1">Status</p>
-                  <span className="inline-flex items-center gap-2 text-primary-700 font-semibold">
+                  <p className="text-xs font-semibold text-primary-300 uppercase tracking-wide mb-1">Status</p>
+                  <span className="inline-flex items-center gap-2 text-primary-300 font-semibold">
                     <CheckCircle className="w-4 h-4" />
                     Connected
                   </span>
                 </div>
-                <p className="font-mono text-sm text-dark-900 break-all">{account}</p>
+                <p className="font-mono text-sm text-white break-all">{account}</p>
               </div>
             ) : (
-              <p className="text-secondary-600 text-lg italic">No wallet connected</p>
+              <p className="text-blue-200 text-lg italic">No wallet connected</p>
             )}
           </div>
           {account && (
@@ -75,30 +75,30 @@ const Settings = () => {
       </div>
 
       {/* DID Settings */}
-      <div className="card">
+      <div className="card" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 40px rgba(0, 255, 200, 0.2), inset 0 0 15px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.5)' }}>
             <Fingerprint className="w-6 h-6" />
           </div>
-          <h2 className="text-2xl font-bold text-dark-900">Decentralized Identifier</h2>
+          <h2 className="text-2xl font-bold text-white" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>Decentralized Identifier</h2>
         </div>
         <div className="space-y-4">
           {did ? (
             <>
               <div>
-                <label className="block text-sm font-semibold text-dark-900 mb-3 uppercase tracking-wide">
+                <label className="block text-sm font-semibold text-white mb-3 uppercase tracking-wide" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                   Your DID
                 </label>
-                <div className="p-4 bg-gradient-to-r from-accent-50 to-primary-50 rounded-xl border border-accent-200">
-                  <p className="font-mono text-sm text-dark-900 break-all">{did}</p>
+                <div className="p-4 bg-black/50 rounded-xl border border-primary-500" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.1)' }}>
+                  <p className="font-mono text-sm text-white break-all">{did}</p>
                 </div>
               </div>
               {didDocument && (
                 <div>
-                  <label className="block text-sm font-semibold text-dark-900 mb-3 uppercase tracking-wide">
+                  <label className="block text-sm font-semibold text-white mb-3 uppercase tracking-wide" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                     DID Document Status
                   </label>
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-sm">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-500 text-white font-semibold text-sm shadow-lg">
                     <CheckCircle className="w-4 h-4" />
                     Active & Verified
                   </div>

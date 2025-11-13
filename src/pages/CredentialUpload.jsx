@@ -127,23 +127,27 @@ const CredentialUpload = () => {
       </button>
 
       <div>
-        <h1 className="text-4xl font-bold text-dark-900 mb-2">Upload Credential</h1>
-        <p className="text-secondary-600 text-lg">
+        <h1 className="text-4xl font-bold text-white mb-2" style={{ textShadow: '0 0 15px rgba(0, 255, 200, 0.8)' }}>Upload Credential</h1>
+        <p className="text-blue-200 text-lg">
           Create and upload a new verifiable credential
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {[1, 2, 3].map((s) => (
-          <div key={s} className={`card text-center py-4 transition-all duration-300 ${
-            step >= s ? 'bg-gradient-to-r from-primary-50 to-accent-50 border-primary-300' : 'bg-secondary-50 border-secondary-200'
-          }`}>
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-white font-bold transition-all duration-300 ${
-              step >= s ? 'bg-gradient-to-br from-primary-500 to-accent-500 shadow-lg' : 'bg-secondary-400'
-            }`}>
+          <div key={s} className="card text-center py-4 transition-all duration-300" style={{
+            background: step >= s ? 'rgba(0, 0, 0, 0.9)' : 'rgba(0, 0, 0, 0.6)',
+            border: `2px solid ${step >= s ? 'var(--primary)' : 'rgba(0, 255, 209, 0.3)'}`,
+            boxShadow: step >= s ? '0 0 30px rgba(0, 255, 200, 0.2)' : '0 0 15px rgba(0, 255, 200, 0.1)',
+            color: 'white'
+          }}>
+            <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2 text-white font-bold transition-all duration-300" style={{
+              background: step >= s ? 'var(--primary)' : 'rgba(0, 255, 209, 0.3)',
+              boxShadow: step >= s ? '0 0 20px rgba(0, 255, 200, 0.5)' : 'none'
+            }}>
               {step > s ? <CheckCircle className="w-6 h-6" /> : s}
             </div>
-            <p className={`font-semibold ${step >= s ? 'text-dark-900' : 'text-secondary-600'}`}>
+            <p className="font-semibold" style={{ textShadow: step >= s ? '0 0 10px rgba(0, 255, 200, 0.5)' : 'none' }}>
               {s === 1 ? 'Details' : s === 2 ? 'Upload' : 'Review'}
             </p>
           </div>
@@ -152,16 +156,17 @@ const CredentialUpload = () => {
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {step === 1 && (
-          <div className="card space-y-6">
+          <div className="card space-y-6" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 40px rgba(0, 255, 200, 0.2), inset 0 0 15px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
             <div>
-              <label className="block text-sm font-semibold text-dark-900 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                 Credential Type
               </label>
               <select
                 name="credentialType"
                 value={formData.credentialType}
                 onChange={handleInputChange}
-                className="input-field w-full"
+                className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-100 transition-all text-white"
+                style={{ background: 'rgba(0,0,0,0.8)', border: '1px solid var(--primary)', boxShadow: '0 0 10px rgba(0, 255, 200, 0.2)' }}
               >
                 <option value="EducationCredential">Education Credential</option>
                 <option value="IdentityCredential">Identity Credential</option>
@@ -172,7 +177,7 @@ const CredentialUpload = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-semibold text-dark-900 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                   Full Name
                 </label>
                 <input
@@ -181,13 +186,14 @@ const CredentialUpload = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="John Doe"
-                  className="input-field w-full"
+                  className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-100 transition-all text-white"
+                  style={{ background: 'rgba(0,0,0,0.8)', border: '1px solid var(--primary)', boxShadow: '0 0 10px rgba(0, 255, 200, 0.2)' }}
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-dark-900 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                   Email Address
                 </label>
                 <input
@@ -196,7 +202,8 @@ const CredentialUpload = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="john@example.com"
-                  className="input-field w-full"
+                  className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-100 transition-all text-white"
+                  style={{ background: 'rgba(0,0,0,0.8)', border: '1px solid var(--primary)', boxShadow: '0 0 10px rgba(0, 255, 200, 0.2)' }}
                   required
                 />
               </div>
@@ -204,7 +211,7 @@ const CredentialUpload = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-semibold text-dark-900 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                   Issuer DID
                 </label>
                 <input
@@ -213,12 +220,13 @@ const CredentialUpload = () => {
                   value={formData.issuer}
                   onChange={handleInputChange}
                   placeholder={did}
-                  className="input-field w-full"
+                  className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-100 transition-all text-white"
+                  style={{ background: 'rgba(0,0,0,0.8)', border: '1px solid var(--primary)', boxShadow: '0 0 10px rgba(0, 255, 200, 0.2)' }}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-dark-900 mb-2">
+                <label className="block text-sm font-semibold text-white mb-2" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                   Issuance Date
                 </label>
                 <input
@@ -226,14 +234,15 @@ const CredentialUpload = () => {
                   name="issuanceDate"
                   value={formData.issuanceDate}
                   onChange={handleInputChange}
-                  className="input-field w-full"
+                  className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-100 transition-all text-white"
+                  style={{ background: 'rgba(0,0,0,0.8)', border: '1px solid var(--primary)', boxShadow: '0 0 10px rgba(0, 255, 200, 0.2)' }}
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-dark-900 mb-2">
+              <label className="block text-sm font-semibold text-white mb-2" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                 Expiration Date (Optional)
               </label>
               <input
@@ -241,7 +250,8 @@ const CredentialUpload = () => {
                 name="expirationDate"
                 value={formData.expirationDate}
                 onChange={handleInputChange}
-                className="input-field w-full"
+                className="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-100 transition-all text-white"
+                style={{ background: 'rgba(0,0,0,0.8)', border: '1px solid var(--primary)', boxShadow: '0 0 10px rgba(0, 255, 200, 0.2)' }}
               />
             </div>
 
@@ -256,34 +266,35 @@ const CredentialUpload = () => {
         )}
 
         {step === 2 && (
-          <div className="card space-y-6">
+          <div className="card space-y-6" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 40px rgba(0, 255, 200, 0.2), inset 0 0 15px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
             <div
               {...getRootProps()}
-              className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 cursor-pointer ${
-                isDragActive
-                  ? 'border-primary-500 bg-primary-50'
-                  : 'border-secondary-300 bg-secondary-50 hover:border-primary-500'
-              }`}
+              className="border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 cursor-pointer"
+              style={{
+                background: isDragActive ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.7)',
+                borderColor: isDragActive ? 'var(--primary)' : 'rgba(0, 255, 209, 0.5)',
+                boxShadow: isDragActive ? '0 0 30px rgba(0, 255, 200, 0.3)' : '0 0 20px rgba(0, 255, 200, 0.1)'
+              }}
             >
               <input {...getInputProps()} />
-              <div className="w-16 h-16 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 rounded-full bg-primary-500 text-white flex items-center justify-center mx-auto mb-4" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.5)' }}>
                 <Upload className="w-8 h-8" />
               </div>
               {uploadedFile ? (
                 <>
-                  <p className="text-lg font-semibold text-dark-900 mb-2">
+                  <p className="text-lg font-semibold text-white mb-2" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                     {uploadedFile.name}
                   </p>
-                  <p className="text-sm text-secondary-600">
+                  <p className="text-sm text-blue-200">
                     {(uploadedFile.size / 1024).toFixed(2)} KB
                   </p>
                 </>
               ) : (
                 <>
-                  <p className="text-lg font-semibold text-dark-900 mb-2">
+                  <p className="text-lg font-semibold text-white mb-2" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
                     {isDragActive ? 'Drop your file here' : 'Drag & drop your credential file'}
                   </p>
-                  <p className="text-sm text-secondary-600">
+                  <p className="text-sm text-blue-200">
                     or click to browse (JSON, PDF, DOC, DOCX)
                   </p>
                 </>
@@ -291,12 +302,12 @@ const CredentialUpload = () => {
             </div>
 
             {ipfsHash && (
-              <div className="p-4 bg-accent-50 border-l-4 border-accent-500 rounded-lg">
+              <div className="p-4 bg-black/50 border-l-4 border-accent-500 rounded-lg" style={{ boxShadow: '0 0 20px rgba(0, 255, 106, 0.2)' }}>
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-accent-600 flex-shrink-0 mt-1" />
+                  <CheckCircle className="w-5 h-5 text-accent-400 flex-shrink-0 mt-1" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 255, 106, 0.5))' }} />
                   <div className="min-w-0">
-                    <p className="font-semibold text-accent-900">File uploaded to IPFS</p>
-                    <p className="text-xs font-mono text-accent-700 mt-1 break-all">{ipfsHash}</p>
+                    <p className="font-semibold text-white" style={{ textShadow: '0 0 10px rgba(0, 255, 106, 0.5)' }}>File uploaded to IPFS</p>
+                    <p className="text-xs font-mono text-accent-300 mt-1 break-all">{ipfsHash}</p>
                   </div>
                 </div>
               </div>
@@ -323,50 +334,50 @@ const CredentialUpload = () => {
         )}
 
         {step === 3 && (
-          <div className="card space-y-6">
+          <div className="card space-y-6" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 40px rgba(0, 255, 200, 0.2), inset 0 0 15px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-dark-900">Review Your Credential</h3>
+              <h3 className="text-lg font-bold text-white" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>Review Your Credential</h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-secondary-50 rounded-xl border border-secondary-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-black/50 rounded-xl border border-primary-500">
                 <div>
-                  <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide">Type</p>
-                  <p className="text-sm font-medium text-dark-900">{formData.credentialType}</p>
+                  <p className="text-xs font-semibold text-blue-200 uppercase tracking-wide">Type</p>
+                  <p className="text-sm font-medium text-white">{formData.credentialType}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide">Name</p>
-                  <p className="text-sm font-medium text-dark-900">{formData.name}</p>
+                  <p className="text-xs font-semibold text-blue-200 uppercase tracking-wide">Name</p>
+                  <p className="text-sm font-medium text-white">{formData.name}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide">Email</p>
-                  <p className="text-sm font-medium text-dark-900">{formData.email}</p>
+                  <p className="text-xs font-semibold text-blue-200 uppercase tracking-wide">Email</p>
+                  <p className="text-sm font-medium text-white">{formData.email}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide">Issued</p>
-                  <p className="text-sm font-medium text-dark-900">{formData.issuanceDate}</p>
+                  <p className="text-xs font-semibold text-blue-200 uppercase tracking-wide">Issued</p>
+                  <p className="text-sm font-medium text-white">{formData.issuanceDate}</p>
                 </div>
               </div>
 
               {uploadedFile && (
-                <div className="p-4 bg-primary-50 border border-primary-200 rounded-xl">
-                  <p className="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-2">Attached File</p>
-                  <p className="text-sm font-medium text-dark-900">{uploadedFile.name}</p>
+                <div className="p-4 bg-black/50 border border-primary-500 rounded-xl" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.1)' }}>
+                  <p className="text-xs font-semibold text-primary-300 uppercase tracking-wide mb-2">Attached File</p>
+                  <p className="text-sm font-medium text-white">{uploadedFile.name}</p>
                 </div>
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gradient-to-r from-primary-50 to-accent-50 border border-primary-200 rounded-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-black/50 border border-primary-500 rounded-xl" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.1)' }}>
               <div className="flex items-start gap-3">
-                <Lock className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" />
+                <Lock className="w-5 h-5 text-primary-400 flex-shrink-0 mt-0.5" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 255, 200, 0.5))' }} />
                 <div>
-                  <p className="font-semibold text-dark-900 text-sm">Cryptographically Signed</p>
-                  <p className="text-xs text-secondary-600">Your DID will sign this credential</p>
+                  <p className="font-semibold text-white text-sm" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>Cryptographically Signed</p>
+                  <p className="text-xs text-blue-200">Your DID will sign this credential</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Shield className="w-5 h-5 text-accent-600 flex-shrink-0 mt-0.5" />
+                <Shield className="w-5 h-5 text-accent-400 flex-shrink-0 mt-0.5" style={{ filter: 'drop-shadow(0 0 5px rgba(0, 255, 106, 0.5))' }} />
                 <div>
-                  <p className="font-semibold text-dark-900 text-sm">IPFS Stored</p>
-                  <p className="text-xs text-secondary-600">Immutably stored on IPFS</p>
+                  <p className="font-semibold text-white text-sm" style={{ textShadow: '0 0 10px rgba(0, 255, 106, 0.5)' }}>IPFS Stored</p>
+                  <p className="text-xs text-blue-200">Immutably stored on IPFS</p>
                 </div>
               </div>
             </div>

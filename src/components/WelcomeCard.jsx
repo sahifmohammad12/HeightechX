@@ -29,7 +29,6 @@ const WelcomeCard = () => {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-4xl font-bold mb-2">Welcome to TruelDent 🔐</h2>
-            <p className="text-primary-100">Advanced Security Credential Management</p>
           </div>
           <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center">
             <User className="w-8 h-8 text-white" />

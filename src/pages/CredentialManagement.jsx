@@ -59,8 +59,8 @@ const CredentialManagement = () => {
     <div className="space-y-8 pb-8">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-dark-900 mb-2">Credential Management</h1>
-          <p className="text-secondary-600 text-lg">
+          <h1 className="text-4xl font-bold text-white mb-2" style={{ textShadow: '0 0 15px rgba(0, 255, 200, 0.8)' }}>Credential Management</h1>
+          <p className="text-blue-200 text-lg">
             View and manage your verifiable credentials
           </p>
         </div>
@@ -102,12 +102,12 @@ const CredentialManagement = () => {
       )}
 
       {credentials.length === 0 ? (
-        <div className="card bg-gradient-to-br from-primary-50 to-accent-50 border-primary-200 text-center py-16">
-          <div className="w-20 h-20 rounded-full bg-primary-500 text-white flex items-center justify-center mx-auto mb-6 shadow-lg">
+        <div className="card text-center py-16" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 40px rgba(0, 255, 200, 0.2), inset 0 0 15px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
+          <div className="w-20 h-20 rounded-full bg-primary-500 text-white flex items-center justify-center mx-auto mb-6 shadow-lg" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.5)' }}>
             <FileText className="w-10 h-10" />
           </div>
-          <h3 className="text-2xl font-bold text-dark-900 mb-2">No Credentials Yet</h3>
-          <p className="text-secondary-600 mb-8 max-w-md mx-auto text-lg">
+          <h3 className="text-2xl font-bold text-white mb-2" style={{ textShadow: '0 0 15px rgba(0, 255, 200, 0.8)' }}>No Credentials Yet</h3>
+          <p className="text-blue-200 mb-8 max-w-md mx-auto text-lg">
             Start by uploading your first verifiable credential
           </p>
           <Link to="/credentials/upload" className="btn-primary inline-flex items-center gap-2">
