@@ -11,7 +11,7 @@ const CredentialUpload = () => {
   const navigate = useNavigate()
   const { addCredential } = useCredential()
   const { did } = useDID()
-  const { uploadFile } = useIPFS()
+  const { uploadToIPFS: uploadFile } = useIPFS()
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [uploadedFile, setUploadedFile] = useState(null)
@@ -56,10 +56,14 @@ const CredentialUpload = () => {
         setUploadedFile(file)
         setLoading(true)
         try {
-          const hash = await uploadFile(file)
-          setIpfsHash(hash)
-          toast.success('File uploaded to IPFS!')
-          setStep(3)
+          const result = await uploadFile(file)
+          if (result && result.hash) {
+            setIpfsHash(result.hash)
+            toast.success('File uploaded to IPFS!')
+            setStep(3)
+          } else {
+            toast.error('Failed to upload file to IPFS')
+          }
         } catch (error) {
           toast.error('Failed to upload file to IPFS')
         } finally {

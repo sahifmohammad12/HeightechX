@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { 
   LayoutDashboard, 
   Fingerprint, 
@@ -10,9 +10,12 @@ import {
   Settings,
   Menu,
   X,
-  Wallet
+  Wallet,
+  LogOut,
+  User
 } from 'lucide-react'
 import { useWallet } from '../../contexts/WalletContext'
+import { useAuth } from '../../contexts/AuthContext'
 
 const IconWrapper = ({ Icon }) => {
   const [isClicked, setIsClicked] = useState(false)
@@ -79,7 +82,9 @@ const IconWrapper = ({ Icon }) => {
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
   const { account, connectWallet, disconnectWallet } = useWallet()
+  const { user, signOut } = useAuth()
 
   const navigation = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
@@ -263,6 +268,45 @@ const Layout = ({ children }) => {
               <span style={{color: 'var(--text)'}} className="text-sm">Security-First Identity Platform</span>
             </div>
             <div className="flex-1" />
+            <div className="flex items-center gap-4">
+              {user && (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{
+                    background: 'rgba(0,255,160,0.06)',
+                    border: '1px solid rgba(0,255,160,0.1)'
+                  }}>
+                    <User className="w-4 h-4" style={{color: 'var(--primary)'}} />
+                    <span className="text-sm font-medium" style={{color: 'var(--text)'}}>
+                      {user.email}
+                    </span>
+                  </div>
+                  <button
+                    onClick={async () => {
+                      await signOut()
+                      navigate('/login')
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300"
+                    style={{
+                      background: 'rgba(255, 23, 68, 0.06)',
+                      color: '#ff6b74',
+                      border: '1px solid rgba(255,107,116,0.14)',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(255,107,116,0.12)';
+                      e.currentTarget.style.boxShadow = '0 0 15px rgba(255,107,116,0.14)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(255, 23, 68, 0.06)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span className="text-sm font-semibold">Logout</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 
