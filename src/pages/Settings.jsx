@@ -178,24 +178,24 @@ const Settings = () => {
       </div>
 
       {/* About */}
-      <div className="card bg-gradient-to-br from-secondary-50 to-primary-50 border-secondary-200">
+      <div className="rounded-xl border-2 border-primary-500 p-6 shadow-lg" style={{ background: 'rgba(0, 4, 10, 0.75)', boxShadow: '0 0 30px rgba(0, 255, 200, 0.06), inset 0 0 12px rgba(0, 255, 200, 0.03)' }}>
         <div className="flex items-center gap-3 mb-6">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center">
             <Info className="w-6 h-6" />
           </div>
-          <h2 className="text-2xl font-bold text-dark-900">About HeightechX</h2>
+          <h2 className="text-2xl font-bold text-white">About HeightechX</h2>
         </div>
-        <div className="space-y-4 text-dark-900">
+        <div className="space-y-4 text-blue-100">
           <div>
-            <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mb-1">Version</p>
-            <p className="text-lg font-semibold">1.0.0</p>
+            <p className="text-xs font-semibold uppercase tracking-wide mb-1" style={{ color: 'var(--primary)' }}>Version</p>
+            <p className="text-lg font-semibold text-white">1.0.0</p>
           </div>
           <div>
-            <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mb-1">Description</p>
-            <p className="text-lg">Decentralized Digital Identity & Credential Vault</p>
+            <p className="text-xs font-semibold uppercase tracking-wide mb-1" style={{ color: 'var(--primary)' }}>Description</p>
+            <p className="text-lg text-blue-100">Decentralized Digital Identity & Credential Vault</p>
           </div>
           <div>
-            <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mb-3">Features</p>
+            <p className="text-xs font-semibold uppercase tracking-wide mb-3" style={{ color: 'var(--primary)' }}>Features</p>
             <ul className="space-y-2">
               <li className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-accent-600" />
