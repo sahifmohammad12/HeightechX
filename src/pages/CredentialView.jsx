@@ -1,171 +1,234 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useCredential } from '../contexts/CredentialContext'
-import { ArrowLeft, Download, Copy, CheckCircle } from 'lucide-react'
+import { ArrowLeft, Copy, Download, ExternalLink, Check, FileJson, Shield, Lock, Calendar } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useState } from 'react'
 
 const CredentialView = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { getCredential } = useCredential()
-  const [copied, setCopied] = useState(false)
+  const { credentials } = useCredential()
+  const [copied, setCopied] = useState(null)
+  const [showJson, setShowJson] = useState(false)
 
-  const credential = getCredential(id)
+  const credential = credentials.find(c => c.id === id)
 
   if (!credential) {
     return (
-      <div className="space-y-6">
-        <div className="card text-center py-12">
-          <p className="text-gray-600 mb-4">Credential not found</p>
-          <button onClick={() => navigate('/credentials')} className="btn-primary">
-            Back to Credentials
-          </button>
+      <div className="space-y-8 pb-8">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-primary-600 hover:text-primary-700 font-semibold transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          Back
+        </button>
+        <div className="card text-center py-16 bg-secondary-50 border-secondary-200">
+          <p className="text-secondary-600 text-lg">Credential not found</p>
         </div>
       </div>
     )
   }
 
-  const copyToClipboard = (text) => {
+  const handleCopy = (text, key) => {
     navigator.clipboard.writeText(text)
-    setCopied(true)
-    toast.success('Copied to clipboard')
-    setTimeout(() => setCopied(false), 2000)
+    setCopied(key)
+    setTimeout(() => setCopied(null), 2000)
+  }
+
+  const handleDownload = () => {
+    const dataStr = JSON.stringify(credential, null, 2)
+    const dataBlob = new Blob([dataStr], { type: 'application/json' })
+    const url = URL.createObjectURL(dataBlob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `${credential.type[1] || 'credential'}.json`
+    link.click()
+    URL.revokeObjectURL(url)
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center space-x-4">
-        <button
-          onClick={() => navigate('/credentials')}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5 text-gray-600" />
-        </button>
+    <div className="space-y-8 pb-8">
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 text-primary-600 hover:text-primary-700 font-semibold transition-colors"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back
+      </button>
+
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Credential Details</h1>
-          <p className="mt-2 text-gray-600">
-            View full details of your verifiable credential
+          <h1 className="text-4xl font-bold text-dark-900 mb-2">{credential.type[1] || 'Credential'}</h1>
+          <p className="text-secondary-600 text-lg">
+            View detailed credential information
           </p>
+        </div>
+        <button
+          onClick={handleDownload}
+          className="btn-primary inline-flex items-center gap-2 w-fit"
+        >
+          <Download className="w-5 h-5" />
+          Download
+        </button>
+      </div>
+
+      <div className="card bg-gradient-to-r from-primary-50 to-accent-50 border-primary-200">
+        <div className="flex items-start justify-between">
+          <div>
+            <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mb-1">Credential Status</p>
+            <p className="text-2xl font-bold text-primary-600">Valid & Verified</p>
+          </div>
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-400 to-accent-600 text-white flex items-center justify-center">
+            <Check className="w-6 h-6" />
+          </div>
         </div>
       </div>
 
-      {/* Credential Info */}
-      <div className="card">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900">
-              {credential.type[1] || 'Credential'}
-            </h2>
-            <p className="text-sm text-gray-500 mt-1">
-              Issued {new Date(credential.issuanceDate).toLocaleDateString()}
-            </p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-              <CheckCircle className="w-3 h-3 mr-1" />
-              Verified
-            </span>
-          </div>
-        </div>
+      <div className="card space-y-6">
+        <h3 className="text-xl font-bold text-dark-900">Credential Details</h3>
 
-        {/* Credential Subject */}
-        <div className="mb-6">
-          <h3 className="text-sm font-medium text-gray-700 mb-3">Credential Information</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(credential.credentialSubject || {}).map(([key, value]) => {
-              if (key === 'id') return null
-              return (
-                <div key={key} className="p-3 bg-gray-50 rounded-lg">
-                  <p className="text-xs font-medium text-gray-500 uppercase mb-1">
-                    {key.replace(/([A-Z])/g, ' $1').trim()}
-                  </p>
-                  <p className="text-sm text-gray-900">{value}</p>
-                </div>
-              )
-            })}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-4 bg-secondary-50 rounded-xl border border-secondary-200">
+            <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mb-2">Type</p>
+            <p className="text-dark-900 font-medium">{credential.type[1]}</p>
           </div>
-        </div>
 
-        {/* Issuer Info */}
-        <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          <h3 className="text-sm font-medium text-blue-900 mb-2">Issuer</h3>
-          <p className="text-sm font-mono text-blue-800 break-all">{credential.issuer}</p>
-        </div>
+          <div className="p-4 bg-secondary-50 rounded-xl border border-secondary-200">
+            <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mb-2">Subject Name</p>
+            <p className="text-dark-900 font-medium">{credential.credentialSubject?.name || 'N/A'}</p>
+          </div>
 
-        {/* IPFS Hash */}
-        {credential.metadata?.ipfsHash && (
-          <div className="mb-6">
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-gray-700">IPFS Hash</h3>
-              <button
-                onClick={() => copyToClipboard(credential.metadata.ipfsHash)}
-                className="text-sm text-primary-600 hover:text-primary-700 flex items-center space-x-1"
-              >
-                {copied ? (
-                  <>
-                    <CheckCircle className="w-4 h-4" />
-                    <span>Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-4 h-4" />
-                    <span>Copy</span>
-                  </>
-                )}
-              </button>
-            </div>
-            <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-              <p className="text-xs font-mono text-gray-700 break-all">
-                {credential.metadata.ipfsHash}
-              </p>
-              <a
-                href={`https://ipfs.io/ipfs/${credential.metadata.ipfsHash}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-primary-600 hover:text-primary-700 mt-2 inline-block"
-              >
-                View on IPFS →
-              </a>
+          <div className="p-4 bg-secondary-50 rounded-xl border border-secondary-200">
+            <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mb-2">Email</p>
+            <p className="text-dark-900 font-medium">{credential.credentialSubject?.email || 'N/A'}</p>
+          </div>
+
+          <div className="p-4 bg-secondary-50 rounded-xl border border-secondary-200">
+            <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mb-2">Issued Date</p>
+            <div className="flex items-center gap-2 text-dark-900 font-medium">
+              <Calendar className="w-4 h-4" />
+              {new Date(credential.issuanceDate).toLocaleDateString()}
             </div>
           </div>
-        )}
+        </div>
+      </div>
 
-        {/* Full JSON */}
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-medium text-gray-700">Full Credential JSON</h3>
-            <div className="flex space-x-2">
+      <div className="card space-y-6">
+        <h3 className="text-xl font-bold text-dark-900">Subject Information</h3>
+
+        <div className="space-y-4">
+          <div className="p-4 bg-gradient-to-r from-primary-50 to-accent-50 border border-primary-200 rounded-xl">
+            <p className="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-2">Subject DID</p>
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-sm font-mono text-dark-900 break-all">{credential.credentialSubject?.id || 'N/A'}</p>
               <button
-                onClick={() => copyToClipboard(JSON.stringify(credential, null, 2))}
-                className="text-sm text-primary-600 hover:text-primary-700 flex items-center space-x-1"
+                onClick={() => handleCopy(credential.credentialSubject?.id || '', 'subject')}
+                className="flex-shrink-0 p-2 hover:bg-primary-200 rounded-lg transition-colors text-primary-600"
               >
-                <Copy className="w-4 h-4" />
-                <span>Copy</span>
-              </button>
-              <button
-                onClick={() => {
-                  const dataStr = JSON.stringify(credential, null, 2)
-                  const dataBlob = new Blob([dataStr], { type: 'application/json' })
-                  const url = URL.createObjectURL(dataBlob)
-                  const link = document.createElement('a')
-                  link.href = url
-                  link.download = `${credential.type[1] || 'credential'}.json`
-                  link.click()
-                  URL.revokeObjectURL(url)
-                }}
-                className="text-sm text-primary-600 hover:text-primary-700 flex items-center space-x-1"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download</span>
+                {copied === 'subject' ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
               </button>
             </div>
           </div>
-          <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 overflow-x-auto">
-            <pre className="text-xs text-gray-700">
+
+          {credential.credentialSubject?.idNumber && (
+            <div className="p-4 bg-secondary-50 rounded-xl border border-secondary-200">
+              <p className="text-xs font-semibold text-secondary-600 uppercase tracking-wide mb-2">ID Number</p>
+              <p className="text-sm font-mono text-dark-900">{credential.credentialSubject.idNumber}</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="card space-y-6">
+        <h3 className="text-xl font-bold text-dark-900">Issuer Information</h3>
+
+        <div className="space-y-4">
+          <div className="p-4 bg-gradient-to-r from-primary-50 to-accent-50 border border-primary-200 rounded-xl">
+            <p className="text-xs font-semibold text-primary-600 uppercase tracking-wide mb-2">Issuer DID</p>
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-sm font-mono text-dark-900 break-all">{credential.issuer}</p>
+              <button
+                onClick={() => handleCopy(credential.issuer, 'issuer')}
+                className="flex-shrink-0 p-2 hover:bg-primary-200 rounded-lg transition-colors text-primary-600"
+              >
+                {copied === 'issuer' ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {credential.metadata?.ipfsHash && (
+        <div className="card space-y-6">
+          <h3 className="text-xl font-bold text-dark-900">IPFS Storage</h3>
+
+          <div className="p-4 bg-gradient-to-r from-accent-50 to-green-50 border border-accent-200 rounded-xl">
+            <div className="flex items-center gap-3 mb-3">
+              <Shield className="w-5 h-5 text-accent-600" />
+              <p className="text-xs font-semibold text-accent-600 uppercase tracking-wide">IPFS Hash</p>
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-sm font-mono text-dark-900 break-all">{credential.metadata.ipfsHash}</p>
+              <button
+                onClick={() => handleCopy(credential.metadata.ipfsHash, 'ipfs')}
+                className="flex-shrink-0 p-2 hover:bg-accent-200 rounded-lg transition-colors text-accent-600"
+              >
+                {copied === 'ipfs' ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
+
+          <a
+            href={`https://ipfs.io/ipfs/${credential.metadata.ipfsHash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-accent-100 text-accent-700 rounded-lg hover:bg-accent-200 transition-colors font-semibold"
+          >
+            <ExternalLink className="w-4 h-4" />
+            View on IPFS
+          </a>
+        </div>
+      )}
+
+      <div className="card space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-bold text-dark-900">Raw Credential Data</h3>
+          <button
+            onClick={() => setShowJson(!showJson)}
+            className="flex items-center gap-2 px-3 py-2 text-primary-600 hover:bg-primary-50 rounded-lg transition-colors font-semibold"
+          >
+            <FileJson className="w-5 h-5" />
+            {showJson ? 'Hide' : 'Show'} JSON
+          </button>
+        </div>
+
+        {showJson && (
+          <div className="mt-4 p-4 bg-dark-900 rounded-xl overflow-x-auto">
+            <pre className="text-sm font-mono text-green-400 whitespace-pre-wrap break-words">
               {JSON.stringify(credential, null, 2)}
             </pre>
           </div>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="card bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200 text-center">
+          <Lock className="w-8 h-8 text-primary-600 mx-auto mb-2" />
+          <p className="font-semibold text-dark-900 text-sm">Cryptographically Secured</p>
+          <p className="text-xs text-secondary-600 mt-1">Signed with your DID</p>
+        </div>
+
+        <div className="card bg-gradient-to-br from-accent-50 to-green-100 border-accent-200 text-center">
+          <Shield className="w-8 h-8 text-accent-600 mx-auto mb-2" />
+          <p className="font-semibold text-dark-900 text-sm">Immutably Stored</p>
+          <p className="text-xs text-secondary-600 mt-1">On IPFS network</p>
+        </div>
+
+        <div className="card bg-gradient-to-br from-primary-50 to-accent-100 border-primary-200 text-center">
+          <Check className="w-8 h-8 text-primary-600 mx-auto mb-2" />
+          <p className="font-semibold text-dark-900 text-sm">Verifiable</p>
+          <p className="text-xs text-secondary-600 mt-1">Independently verifiable</p>
         </div>
       </div>
     </div>
@@ -173,4 +236,3 @@ const CredentialView = () => {
 }
 
 export default CredentialView
-
