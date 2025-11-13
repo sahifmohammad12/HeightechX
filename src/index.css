@@ -19,44 +19,128 @@
     background-color: #ffffff;
     color: #111827;
   }
+
+  /* Animations */
+  @keyframes ripple {
+    from {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+  }
+
+  @keyframes bounce-pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes rotate-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
+    }
+  }
 }
 
 @layer components {
+  /* Button Components */
   .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200;
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95 relative overflow-hidden;
+  }
+
+  .btn-primary:active {
+    animation: bounce-pop 0.3s ease-out;
   }
 
   .btn-secondary {
-    @apply bg-secondary-100 hover:bg-secondary-200 text-gray-900 font-semibold py-3 px-6 rounded-lg transition-all duration-200 border border-secondary-200;
+    @apply bg-secondary-100 hover:bg-secondary-200 text-gray-900 font-semibold py-3 px-6 rounded-lg transition-all duration-200 border border-secondary-200 active:scale-95;
   }
 
   .btn-accent {
-    @apply bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200;
+    @apply bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95;
   }
 
+  .btn-accent:active {
+    animation: bounce-pop 0.3s ease-out;
+  }
+
+  /* Card Components */
   .card {
-    @apply bg-white rounded-xl shadow-md p-6 border border-secondary-200;
+    @apply bg-white rounded-xl shadow-md p-6 border border-secondary-200 transition-all duration-300 hover:shadow-lg;
   }
 
+  .card:hover {
+    @apply border-primary-200;
+  }
+
+  /* Input Fields */
   .input-field {
     @apply w-full px-4 py-3 border border-secondary-200 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all;
   }
 
+  /* Badge Styles */
   .badge {
-    @apply inline-block px-3 py-1 rounded-full text-xs font-semibold;
+    @apply inline-block px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200;
   }
 
   .badge-primary {
     @apply bg-primary-100 text-primary-700;
   }
 
+  .badge-primary:hover {
+    @apply bg-primary-200 scale-105;
+  }
+
   .badge-accent {
     @apply bg-accent-100 text-accent-700;
   }
 
+  .badge-accent:hover {
+    @apply bg-accent-200 scale-105;
+  }
+
   /* Icon Animation on Click */
   .icon-clickable {
-    @apply cursor-pointer transition-all duration-200 active:scale-125;
+    @apply cursor-pointer transition-all duration-200 hover:scale-110;
+  }
+
+  .icon-clickable:active {
+    animation: bounce-pop 0.3s ease-out;
+  }
+
+  /* Ripple animation */
+  .ripple-effect {
+    @apply relative overflow-hidden;
+  }
+
+  /* Link Hover Effects */
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  a:hover {
+    @apply text-primary-600;
   }
 }
 

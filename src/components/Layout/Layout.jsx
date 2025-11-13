@@ -16,9 +16,24 @@ import { useWallet } from '../../contexts/WalletContext'
 
 const IconWrapper = ({ Icon }) => {
   const [isClicked, setIsClicked] = useState(false)
+  const [ripples, setRipples] = useState([])
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e) => {
     setIsClicked(true)
+    
+    // Create ripple effect
+    const rect = e.currentTarget.getBoundingClientRect()
+    const ripple = {
+      id: Date.now(),
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    }
+    setRipples([...ripples, ripple])
+
+    // Remove ripple after animation
+    setTimeout(() => {
+      setRipples(r => r.filter(rip => rip.id !== ripple.id))
+    }, 600)
   }
 
   const handleMouseUp = () => {
@@ -26,14 +41,32 @@ const IconWrapper = ({ Icon }) => {
   }
 
   return (
-    <Icon 
-      className={`w-5 h-5 transition-all duration-200 ${
-        isClicked ? 'scale-125' : 'scale-100'
-      }`}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-    />
+    <div className="relative inline-flex items-center justify-center">
+      <Icon 
+        className={`w-5 h-5 transition-all duration-200 ${
+          isClicked ? 'scale-125 rotate-12' : 'scale-100 rotate-0'
+        }`}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      />
+      
+      {/* Ripple effect */}
+      {ripples.map(ripple => (
+        <div
+          key={ripple.id}
+          className="absolute rounded-full bg-primary-400 pointer-events-none animate-ping opacity-75"
+          style={{
+            width: '20px',
+            height: '20px',
+            left: `${ripple.x}px`,
+            top: `${ripple.y}px`,
+            transform: 'translate(-50%, -50%)',
+            animation: 'ripple 0.6s ease-out',
+          }}
+        />
+      ))}
+    </div>
   )
 }
 
