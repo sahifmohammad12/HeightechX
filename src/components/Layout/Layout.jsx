@@ -99,7 +99,7 @@ const Layout = ({ children }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 via-blue-400 to-green-300">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div 

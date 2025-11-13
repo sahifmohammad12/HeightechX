@@ -7,7 +7,7 @@
     --primary: #2563eb;
     --secondary: #e2e8f0;
     --accent: #10b981;
-    --background: #ffffff;
+    --background: linear-gradient(135deg, #2563eb 0%, #60a5fa 50%, #86efac 100%);
     --text: #111827;
   }
 
@@ -16,8 +16,9 @@
   }
 
   body {
-    background-color: #ffffff;
+    background: linear-gradient(135deg, #2563eb 0%, #60a5fa 50%, #86efac 100%);
     color: #111827;
+    min-height: 100vh;
   }
 
   /* Animations */
