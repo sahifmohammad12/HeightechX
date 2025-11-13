@@ -76,7 +76,7 @@ const Dashboard = () => {
   const recentCredentials = credentials.slice(-5).reverse()
 
   return (
-    <div className="space-y-8 pb-8 p-6 rounded-2xl" style={{background: 'linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(0, 255, 65, 0.05) 100%)', border: '2px solid rgba(0, 217, 255, 0.2)'}}>
+    <div className="space-y-8 pb-8 p-6 rounded-2xl" style={{background: 'linear-gradient(180deg, rgba(0,4,10,0.55), rgba(4,16,23,0.55))', border: '1px solid rgba(0,255,160,0.06)'}}>
       {/* Welcome Card */}
       <WelcomeCard />
 
@@ -85,18 +85,18 @@ const Dashboard = () => {
 
       {/* Stats Grid */}
       <div>
-        <h3 className="text-xl font-bold text-dark-900 mb-4">Quick Stats</h3>
+        <h3 className="text-xl font-bold mb-4" style={{color: 'var(--text)', borderLeft: '4px solid rgba(0,255,160,0.08)', paddingLeft: '10px'}}>Quick Stats</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {stats.map((stat) => {
             const Icon = stat.icon
             return (
-              <div key={stat.name} className="card hover:shadow-lg hover:border-primary-200 transition-all duration-300">
+              <div key={stat.name} className="card transition-all duration-300">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-secondary-600">{stat.name}</p>
-                    <p className="mt-3 text-3xl font-bold text-dark-900">{stat.value}</p>
+                    <p className="text-sm font-medium" style={{color: 'rgba(191,252,240,0.75)'}}>{stat.name}</p>
+                    <p className="mt-3 text-3xl font-bold" style={{color: 'var(--text)'}}>{stat.value}</p>
                   </div>
-                  <div className={`bg-gradient-to-br ${stat.gradient} p-4 rounded-xl text-white shadow-lg`}>
+                  <div style={{background: 'linear-gradient(135deg, var(--primary), var(--accent))', padding: '14px', borderRadius: 12, color: '#001014', boxShadow: '0 6px 20px rgba(0,255,160,0.08)'}}>
                     <Icon className="w-6 h-6" />
                   </div>
                 </div>
@@ -108,41 +108,41 @@ const Dashboard = () => {
 
       {/* Quick Actions Panel */}
       <div>
-        <h3 className="text-xl font-bold text-dark-900 mb-4">Quick Actions</h3>
+        <h3 className="text-xl font-bold mb-4" style={{color: 'var(--text)', borderLeft: '4px solid rgba(0,255,160,0.08)', paddingLeft: '10px'}}>Quick Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {quickActions.map((action) => {
             const Icon = action.icon
+            const actionStyle = action.disabled
+              ? { background: 'rgba(255,255,255,0.02)', color: 'rgba(191,252,240,0.6)', cursor: 'not-allowed', border: '1px solid rgba(255,255,255,0.02)' }
+              : { background: 'linear-gradient(135deg, var(--primary), var(--accent))', color: '#001014' }
+
             return (
               <a
                 key={action.title}
                 href={action.disabled ? '#' : action.href}
-                className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300 ${
-                  action.disabled
-                    ? 'bg-secondary-100 cursor-not-allowed opacity-60'
-                    : `bg-gradient-to-br ${action.color} text-white hover:shadow-xl hover:scale-105 active:scale-95`
-                }`}
+                className={`group relative overflow-hidden rounded-2xl p-6 transition-all duration-300`}
+                style={actionStyle}
               >
-                {/* Background glow */}
                 {!action.disabled && (
-                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{background: 'radial-gradient(circle at 10% 10%, rgba(0,255,160,0.06), transparent 20%)'}} />
                 )}
 
                 <div className="relative z-10">
                   <Icon className="w-8 h-8 mb-3" />
-                  <h4 className="font-semibold text-sm mb-1">{action.title}</h4>
-                  <p className={`text-xs ${action.disabled ? 'text-secondary-600' : 'text-white/80'}`}>
+                  <h4 className="font-semibold text-sm mb-1" style={{color: action.disabled ? 'rgba(191,252,240,0.85)' : '#001014'}}>{action.title}</h4>
+                  <p className="text-xs" style={{color: action.disabled ? 'rgba(191,252,240,0.6)' : 'rgba(0,0,0,0.7)'}}>
                     {action.description}
                   </p>
 
                   {action.disabled && (
-                    <div className="mt-3 flex items-center gap-1 text-xs">
+                    <div className="mt-3 flex items-center gap-1 text-xs" style={{color: 'rgba(191,252,240,0.6)'}}>
                       <Lock className="w-3 h-3" />
                       <span>Locked</span>
                     </div>
                   )}
 
                   {!action.disabled && (
-                    <div className="mt-3 flex items-center gap-1 text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="mt-3 flex items-center gap-1 text-xs opacity-0 group-hover:opacity-100 transition-opacity" style={{color: '#001014'}}>
                       <ArrowRight className="w-3 h-3" />
                       <span>Get Started</span>
                     </div>
@@ -157,7 +157,7 @@ const Dashboard = () => {
       {/* Recent Credentials */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-dark-900">Recent Credentials</h3>
+          <h3 className="text-xl font-bold" style={{color: 'var(--text)', borderLeft: '4px solid rgba(0,255,160,0.08)', paddingLeft: '10px'}}>Recent Credentials</h3>
           {credentials.length > 0 && (
             <a href="/credentials" className="text-sm font-semibold text-primary-600 hover:text-primary-700 flex items-center gap-1 transition-colors">
               View All <ArrowRight className="w-4 h-4" />
@@ -166,12 +166,12 @@ const Dashboard = () => {
         </div>
 
         {credentials.length === 0 ? (
-          <div className="card text-center py-16 border-2 border-dashed border-secondary-300">
-            <div className="w-16 h-16 rounded-full bg-secondary-100 flex items-center justify-center mx-auto mb-4">
-              <FileText className="w-8 h-8 text-secondary-600" />
+          <div className="card text-center py-16" style={{borderStyle: 'dashed', borderWidth: 1, borderColor: 'rgba(255,255,255,0.03)'}}>
+            <div className="w-16 h-16 rounded-full bg-transparent flex items-center justify-center mx-auto mb-4" style={{background: 'rgba(255,255,255,0.02)'}}>
+              <FileText className="w-8 h-8" style={{color: 'var(--text)'}} />
             </div>
-            <h4 className="text-lg font-semibold text-dark-900 mb-2">No Credentials Yet</h4>
-            <p className="text-secondary-600 mb-6">Upload your first credential to begin your decentralized identity journey!</p>
+            <h4 className="text-lg font-semibold mb-2" style={{color: 'var(--text)'}}>No Credentials Yet</h4>
+            <p style={{color: 'rgba(191,252,240,0.7)'}} className="mb-6">Upload your first credential to begin your decentralized identity journey!</p>
             <a
               href="/credentials/upload"
               className="inline-block btn-primary"
@@ -218,41 +218,41 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="card">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="font-semibold text-dark-900">Activity</h4>
-              <BarChart3 className="w-5 h-5 text-primary-500" />
+              <h4 className="font-semibold" style={{color: 'var(--text)'}}>Activity</h4>
+              <BarChart3 className="w-5 h-5" style={{color: 'var(--primary)'}} />
             </div>
             <div className="space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-secondary-600">Credentials Added</span>
-                <span className="font-semibold text-dark-900">{credentials.length}</span>
+                <span style={{color: 'rgba(191,252,240,0.75)'}}>Credentials Added</span>
+                <span className="font-semibold" style={{color: 'var(--text)'}}>{credentials.length}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-secondary-600">Verified</span>
-                <span className="font-semibold text-accent-600">{credentials.length}</span>
+                <span style={{color: 'rgba(191,252,240,0.75)'}}>Verified</span>
+                <span className="font-semibold" style={{color: 'var(--accent)'}}>{credentials.length}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-secondary-600">Shared</span>
-                <span className="font-semibold text-dark-900">0</span>
+                <span style={{color: 'rgba(191,252,240,0.75)'}}>Shared</span>
+                <span className="font-semibold" style={{color: 'var(--text)'}}>0</span>
               </div>
             </div>
           </div>
 
-          <div className="card bg-gradient-to-br from-primary-50 to-accent-50 border-primary-200">
+          <div className="card" style={{background: 'linear-gradient(135deg, rgba(0,255,209,0.03), rgba(0,255,106,0.03))', border: '1px solid rgba(0,255,160,0.06)'}}>
             <div className="flex items-center justify-between mb-4">
-              <h4 className="font-semibold text-dark-900">Tips</h4>
-              <Zap className="w-5 h-5 text-primary-500" />
+              <h4 className="font-semibold" style={{color: 'var(--text)'}}>Tips</h4>
+              <Zap className="w-5 h-5" style={{color: 'var(--primary)'}} />
             </div>
-            <ul className="space-y-2 text-sm text-secondary-700">
+            <ul className="space-y-2 text-sm" style={{color: 'rgba(191,252,240,0.75)'}}>
               <li className="flex gap-2">
-                <span className="text-primary-600 font-bold">•</span>
+                <span style={{color: 'var(--primary)', fontWeight: 700}}>•</span>
                 Keep your DID secure and backed up
               </li>
               <li className="flex gap-2">
-                <span className="text-primary-600 font-bold">•</span>
+                <span style={{color: 'var(--primary)', fontWeight: 700}}>•</span>
                 Share credentials selectively
               </li>
               <li className="flex gap-2">
-                <span className="text-primary-600 font-bold">•</span>
+                <span style={{color: 'var(--primary)', fontWeight: 700}}>•</span>
                 Verify credentials before trusting
               </li>
             </ul>
