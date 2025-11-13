@@ -76,7 +76,7 @@ const Dashboard = () => {
   const recentCredentials = credentials.slice(-5).reverse()
 
   return (
-    <div className="space-y-8 pb-8">
+    <div className="space-y-8 pb-8 bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl">
       {/* Welcome Card */}
       <WelcomeCard />
 
