@@ -110,18 +110,23 @@ const Layout = ({ children }) => {
 
       {/* Sidebar */}
       <aside className={`
-        fixed top-0 left-0 z-30 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
+        fixed top-0 left-0 z-30 h-full w-64 transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0
-      `}>
+      `}
+      style={{
+        background: 'linear-gradient(180deg, #0a0e27 0%, #1a1f3a 50%, #0f4c3a 100%)',
+        borderRight: '2px solid #00d9ff',
+        boxShadow: '2px 0 30px rgba(0, 217, 255, 0.2)'
+      }}>
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <span className="text-xl font-bold text-gray-900">TruelDent</span>ottom: '2px solid rgba(0, 217, 255, 0.3)'}}>
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <Shield className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #00d9ff, #00ff41)', boxShadow: '0 0 15px rgba(0, 217, 255, 0.6)'}}>
+                <Shield className="w-5 h-5 text-gray-900" />
               </div>
-              <span className="text-xl font-bold text-gray-900">TruleDent</span>
+              <span className="text-xl font-bold" style={{color: '#00d9ff', textShadow: '0 0 10px rgba(0, 217, 255, 0.5)'}}>TruelDent</span>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
@@ -141,13 +146,32 @@ const Layout = ({ children }) => {
                   key={item.name}
                   to={item.href}
                   onClick={() => setSidebarOpen(false)}
-                  className={`
-                    flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors cursor-pointer
-                    ${active 
-                      ? 'bg-primary-50 text-primary-700 font-medium' 
-                      : 'text-gray-700 hover:bg-gray-100'
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '12px 16px',
+                    borderRadius: '8px',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    color: active ? '#00ff41' : '#00d9ff',
+                    background: active ? 'rgba(0, 255, 65, 0.1)' : 'rgba(0, 217, 255, 0.05)',
+                    border: active ? '1px solid #00ff41' : '1px solid rgba(0, 217, 255, 0.2)',
+                    boxShadow: active ? '0 0 15px rgba(0, 255, 65, 0.3)' : 'none',
+                    fontWeight: active ? '600' : '500'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(0, 217, 255, 0.15)';
+                    e.currentTarget.style.border = '1px solid #00d9ff';
+                    e.currentTarget.style.boxShadow = '0 0 10px rgba(0, 217, 255, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active) {
+                      e.currentTarget.style.background = 'rgba(0, 217, 255, 0.05)';
+                      e.currentTarget.style.border = '1px solid rgba(0, 217, 255, 0.2)';
+                      e.currentTarget.style.boxShadow = 'none';
                     }
-                  `}
+                  }}
                 >
                   <IconWrapper Icon={Icon} />
                   <span>{item.name}</span>
@@ -157,16 +181,36 @@ const Layout = ({ children }) => {
           </nav>
 
           {/* Wallet Connection */}
-          <div className="p-4 border-t border-gray-200">
+          <div style={{padding: '16px', borderTop: '2px solid rgba(0, 217, 255, 0.3)'}}>
             {account ? (
               <div className="space-y-2">
-                <div className="flex items-center space-x-2 text-sm text-gray-600">
+                <div style={{display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#00ff41'}}>
                   <Wallet className="w-4 h-4" />
-                  <span className="truncate">{account.slice(0, 6)}...{account.slice(-4)}</span>
+                  <span className="truncate" style={{textShadow: '0 0 5px rgba(0, 255, 65, 0.5)'}}>{account.slice(0, 6)}...{account.slice(-4)}</span>
                 </div>
                 <button
                   onClick={disconnectWallet}
-                  className="w-full btn-secondary text-sm"
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    backgroundColor: 'rgba(255, 23, 68, 0.15)',
+                    color: '#ff1744',
+                    border: '1px solid #ff1744',
+                    borderRadius: '6px',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 0 10px rgba(255, 23, 68, 0.2)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 23, 68, 0.25)';
+                    e.currentTarget.style.boxShadow = '0 0 15px rgba(255, 23, 68, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 23, 68, 0.15)';
+                    e.currentTarget.style.boxShadow = '0 0 10px rgba(255, 23, 68, 0.2)';
+                  }}
                 >
                   Disconnect
                 </button>
@@ -174,7 +218,27 @@ const Layout = ({ children }) => {
             ) : (
               <button
                 onClick={connectWallet}
-                className="w-full btn-primary"
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: 'linear-gradient(135deg, #00d9ff, #00ff41)',
+                  color: '#0a0e27',
+                  border: 'none',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 0 20px rgba(0, 217, 255, 0.6)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 30px rgba(0, 217, 255, 0.8)';
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 0 20px rgba(0, 217, 255, 0.6)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 Connect Wallet
               </button>
