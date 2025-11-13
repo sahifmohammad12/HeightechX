@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { 
   LayoutDashboard, 
@@ -17,6 +17,8 @@ import { useWallet } from '../../contexts/WalletContext'
 const IconWrapper = ({ Icon }) => {
   const [isClicked, setIsClicked] = useState(false)
   const [ripples, setRipples] = useState([])
+  const [particles, setParticles] = useState([])
+  const iconRef = useRef(null)
 
   const handleMouseDown = (e) => {
     setIsClicked(true)
@@ -30,10 +32,28 @@ const IconWrapper = ({ Icon }) => {
     }
     setRipples([...ripples, ripple])
 
+    // Create particle burst effect
+    const particleCount = 8
+    const newParticles = []
+    for (let i = 0; i < particleCount; i++) {
+      const angle = (i / particleCount) * Math.PI * 2
+      newParticles.push({
+        id: `${ripple.id}-${i}`,
+        angle,
+        distance: 0,
+      })
+    }
+    setParticles([...particles, ...newParticles])
+
     // Remove ripple after animation
     setTimeout(() => {
       setRipples(r => r.filter(rip => rip.id !== ripple.id))
     }, 600)
+
+    // Remove particles after animation
+    setTimeout(() => {
+      setParticles(p => p.filter(par => !par.id.startsWith(ripple.id)))
+    }, 800)
   }
 
   const handleMouseUp = () => {
@@ -41,10 +61,11 @@ const IconWrapper = ({ Icon }) => {
   }
 
   return (
-    <div className="relative inline-flex items-center justify-center">
+    <div className="relative inline-flex items-center justify-center cursor-pointer">
       <Icon 
-        className={`w-5 h-5 transition-all duration-200 ${
-          isClicked ? 'scale-125 rotate-12' : 'scale-100 rotate-0'
+        ref={iconRef}
+        className={`w-5 h-5 transition-all duration-300 ${
+          isClicked ? 'scale-140 rotate-45 brightness-150' : 'scale-100 rotate-0'
         }`}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
@@ -55,7 +76,7 @@ const IconWrapper = ({ Icon }) => {
       {ripples.map(ripple => (
         <div
           key={ripple.id}
-          className="absolute rounded-full bg-primary-400 pointer-events-none animate-ping opacity-75"
+          className="absolute rounded-full bg-primary-400 pointer-events-none"
           style={{
             width: '20px',
             height: '20px',
@@ -63,9 +84,40 @@ const IconWrapper = ({ Icon }) => {
             top: `${ripple.y}px`,
             transform: 'translate(-50%, -50%)',
             animation: 'ripple 0.6s ease-out',
+            opacity: 0.5,
           }}
         />
       ))}
+
+      {/* Particle burst effect */}
+      {particles.map(particle => {
+        const distance = isClicked ? 30 : 0
+        const x = Math.cos(particle.angle) * distance
+        const y = Math.sin(particle.angle) * distance
+        return (
+          <div
+            key={particle.id}
+            className="absolute w-1 h-1 rounded-full bg-primary-500 pointer-events-none"
+            style={{
+              left: '50%',
+              top: '50%',
+              transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+              animation: 'particle-burst 0.8s ease-out forwards',
+              opacity: isClicked ? 0.8 : 0,
+            }}
+          />
+        )
+      })}
+
+      {/* Glow effect */}
+      <div
+        className={`absolute inset-0 rounded-full transition-all duration-300 ${
+          isClicked ? 'bg-primary-400 opacity-30 scale-150' : 'bg-primary-400 opacity-0 scale-100'
+        }`}
+        style={{
+          pointerEvents: 'none',
+        }}
+      />
     </div>
   )
 }

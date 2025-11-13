@@ -20,14 +20,25 @@
     color: #111827;
   }
 
-  /* Animations */
+  /* Advanced Animations */
   @keyframes ripple {
     from {
       transform: translate(-50%, -50%) scale(0);
       opacity: 1;
     }
     to {
-      transform: translate(-50%, -50%) scale(2);
+      transform: translate(-50%, -50%) scale(3);
+      opacity: 0;
+    }
+  }
+
+  @keyframes particle-burst {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(calc(-50% + var(--tx, 0)), calc(-50% + var(--ty, 0))) scale(0);
       opacity: 0;
     }
   }
@@ -36,20 +47,14 @@
     0% {
       transform: scale(1);
     }
+    25% {
+      transform: scale(1.3);
+    }
     50% {
-      transform: scale(1.2);
+      transform: scale(1.1);
     }
     100% {
       transform: scale(1);
-    }
-  }
-
-  @keyframes rotate-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
     }
   }
 
@@ -61,37 +66,65 @@
       box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
     }
   }
+
+  @keyframes flip-spin {
+    0% {
+      transform: rotateY(0) scale(1);
+    }
+    50% {
+      transform: rotateY(90deg) scale(1.2);
+    }
+    100% {
+      transform: rotateY(0) scale(1);
+    }
+  }
+
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+      transform: translateX(-2px);
+    }
+    20%, 40%, 60%, 80% {
+      transform: translateX(2px);
+    }
+  }
 }
 
 @layer components {
-  /* Button Components */
+  /* Button Components with Enhanced Animations */
   .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95 relative overflow-hidden;
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 relative overflow-hidden;
   }
 
   .btn-primary:active {
-    animation: bounce-pop 0.3s ease-out;
+    animation: bounce-pop 0.4s ease-out;
+  }
+
+  .btn-primary:hover {
+    @apply shadow-lg;
   }
 
   .btn-secondary {
-    @apply bg-secondary-100 hover:bg-secondary-200 text-gray-900 font-semibold py-3 px-6 rounded-lg transition-all duration-200 border border-secondary-200 active:scale-95;
+    @apply bg-secondary-100 hover:bg-secondary-200 text-gray-900 font-semibold py-3 px-6 rounded-lg transition-all duration-300 border border-secondary-200;
+  }
+
+  .btn-secondary:active {
+    animation: bounce-pop 0.4s ease-out;
   }
 
   .btn-accent {
-    @apply bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95;
+    @apply bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300;
   }
 
   .btn-accent:active {
-    animation: bounce-pop 0.3s ease-out;
+    animation: bounce-pop 0.4s ease-out;
   }
 
   /* Card Components */
   .card {
-    @apply bg-white rounded-xl shadow-md p-6 border border-secondary-200 transition-all duration-300 hover:shadow-lg;
-  }
-
-  .card:hover {
-    @apply border-primary-200;
+    @apply bg-white rounded-xl shadow-md p-6 border border-secondary-200 transition-all duration-300 hover:shadow-lg hover:border-primary-200;
   }
 
   /* Input Fields */
@@ -99,9 +132,9 @@
     @apply w-full px-4 py-3 border border-secondary-200 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all;
   }
 
-  /* Badge Styles */
+  /* Badge Styles with Animation */
   .badge {
-    @apply inline-block px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200;
+    @apply inline-block px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 hover:scale-110;
   }
 
   .badge-primary {
@@ -109,7 +142,7 @@
   }
 
   .badge-primary:hover {
-    @apply bg-primary-200 scale-105;
+    @apply bg-primary-200 shadow-md;
   }
 
   .badge-accent {
@@ -117,30 +150,34 @@
   }
 
   .badge-accent:hover {
-    @apply bg-accent-200 scale-105;
+    @apply bg-accent-200 shadow-md;
   }
 
-  /* Icon Animation on Click */
+  /* Icon Animation Classes */
   .icon-clickable {
-    @apply cursor-pointer transition-all duration-200 hover:scale-110;
+    @apply cursor-pointer transition-all duration-300 hover:scale-110 active:scale-140;
   }
 
   .icon-clickable:active {
-    animation: bounce-pop 0.3s ease-out;
+    animation: bounce-pop 0.4s ease-out;
   }
 
-  /* Ripple animation */
-  .ripple-effect {
-    @apply relative overflow-hidden;
+  /* Glow effect for interactive elements */
+  .glow-effect {
+    @apply transition-all duration-300;
   }
 
-  /* Link Hover Effects */
+  .glow-effect:hover {
+    @apply shadow-lg shadow-primary-400;
+  }
+
+  /* Link animations */
   a {
     @apply transition-colors duration-200;
   }
 
-  a:hover {
-    @apply text-primary-600;
+  a:active {
+    animation: shake 0.3s ease-in-out;
   }
 }
 
