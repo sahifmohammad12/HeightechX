@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { 
   LayoutDashboard, 
@@ -17,29 +17,23 @@ import { useWallet } from '../../contexts/WalletContext'
 const IconWrapper = ({ Icon }) => {
   const [isClicked, setIsClicked] = useState(false)
   const [popups, setPopups] = useState([])
-  const iconRef = useRef(null)
 
   const handleMouseDown = (e) => {
     setIsClicked(true)
     
-    // Create pop-up effect
+    // Create popup effect
+    const rect = e.currentTarget.getBoundingClientRect()
     const popup = {
       id: Date.now(),
-      scale: 0,
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
     }
     setPopups([...popups, popup])
-
-    // Animate pop-up
-    setTimeout(() => {
-      setPopups(prev => 
-        prev.map(p => p.id === popup.id ? { ...p, scale: 1 } : p)
-      )
-    }, 50)
 
     // Remove popup after animation
     setTimeout(() => {
       setPopups(p => p.filter(pop => pop.id !== popup.id))
-    }, 700)
+    }, 800)
   }
 
   const handleMouseUp = () => {
@@ -47,45 +41,37 @@ const IconWrapper = ({ Icon }) => {
   }
 
   return (
-    <div className="relative inline-flex items-center justify-center cursor-pointer">
-      {/* Pop-up rings */}
-      {popups.map(popup => (
-        <div
-          key={popup.id}
-          className="absolute rounded-full border-2 border-primary-400 pointer-events-none"
-          style={{
-            width: '30px',
-            height: '30px',
-            transform: `scale(${popup.scale})`,
-            opacity: 1 - popup.scale,
-            animation: 'popup-expand 0.7s ease-out forwards',
-            left: '50%',
-            top: '50%',
-            marginLeft: '-15px',
-            marginTop: '-15px',
-          }}
-        />
-      ))}
-
+    <div className="relative inline-flex items-center justify-center">
       <Icon 
-        ref={iconRef}
-        className={`w-5 h-5 transition-all duration-300 ${
-          isClicked ? 'scale-150 animate-bounce' : 'scale-100'
+        className={`w-5 h-5 transition-all duration-200 ${
+          isClicked ? 'scale-125 rotate-12' : 'scale-100 rotate-0'
         }`}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       />
       
-      {/* Pop background glow */}
-      <div
-        className={`absolute inset-0 rounded-full transition-all duration-300 ${
-          isClicked ? 'bg-primary-400 opacity-40 scale-200 blur-sm' : 'bg-primary-400 opacity-0 scale-100'
-        }`}
-        style={{
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Popup effect container */}
+      {popups.map(popup => (
+        <div key={popup.id} className="fixed pointer-events-none">
+          <div
+            className="absolute animate-popup"
+            style={{
+              left: `${popup.x}px`,
+              top: `${popup.y}px`,
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <div className="flex items-center justify-center">
+              {/* Popup burst particles */}
+              <div className="absolute w-2 h-2 bg-primary-500 rounded-full animate-burst-1" />
+              <div className="absolute w-2 h-2 bg-primary-400 rounded-full animate-burst-2" />
+              <div className="absolute w-2 h-2 bg-accent-500 rounded-full animate-burst-3" />
+              <div className="absolute w-1.5 h-1.5 bg-primary-300 rounded-full animate-burst-4" />
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

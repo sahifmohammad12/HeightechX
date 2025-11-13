@@ -20,39 +20,69 @@
     color: #111827;
   }
 
-  /* Advanced Animations */
-  @keyframes popup-expand {
-    0% {
-      transform: scale(0);
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.8;
-    }
-    100% {
-      transform: scale(2.5);
-      opacity: 0;
-    }
-  }
-
+  /* Animations */
   @keyframes ripple {
     from {
       transform: translate(-50%, -50%) scale(0);
       opacity: 1;
     }
     to {
-      transform: translate(-50%, -50%) scale(3);
+      transform: translate(-50%, -50%) scale(2);
       opacity: 0;
     }
   }
 
-  @keyframes particle-burst {
+  @keyframes popup {
     0% {
       transform: translate(-50%, -50%) scale(1);
       opacity: 1;
     }
     100% {
-      transform: translate(calc(-50% + var(--tx, 0)), calc(-50% + var(--ty, 0))) scale(0);
+      transform: translate(-50%, -50%) scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes burst-1 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(30px, -30px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes burst-2 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-30px, -30px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes burst-3 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(0, 40px) scale(0);
+      opacity: 0;
+    }
+  }
+
+  @keyframes burst-4 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-35px, 20px) scale(0);
       opacity: 0;
     }
   }
@@ -61,14 +91,20 @@
     0% {
       transform: scale(1);
     }
-    25% {
-      transform: scale(1.3);
-    }
     50% {
-      transform: scale(1.1);
+      transform: scale(1.2);
     }
     100% {
       transform: scale(1);
+    }
+  }
+
+  @keyframes rotate-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }
 
@@ -80,65 +116,37 @@
       box-shadow: 0 0 0 10px rgba(37, 99, 235, 0);
     }
   }
-
-  @keyframes flip-spin {
-    0% {
-      transform: rotateY(0) scale(1);
-    }
-    50% {
-      transform: rotateY(90deg) scale(1.2);
-    }
-    100% {
-      transform: rotateY(0) scale(1);
-    }
-  }
-
-  @keyframes shake {
-    0%, 100% {
-      transform: translateX(0);
-    }
-    10%, 30%, 50%, 70%, 90% {
-      transform: translateX(-2px);
-    }
-    20%, 40%, 60%, 80% {
-      transform: translateX(2px);
-    }
-  }
 }
 
 @layer components {
-  /* Button Components with Enhanced Animations */
+  /* Button Components */
   .btn-primary {
-    @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 relative overflow-hidden;
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95 relative overflow-hidden;
   }
 
   .btn-primary:active {
-    animation: bounce-pop 0.4s ease-out;
-  }
-
-  .btn-primary:hover {
-    @apply shadow-lg;
+    animation: bounce-pop 0.3s ease-out;
   }
 
   .btn-secondary {
-    @apply bg-secondary-100 hover:bg-secondary-200 text-gray-900 font-semibold py-3 px-6 rounded-lg transition-all duration-300 border border-secondary-200;
-  }
-
-  .btn-secondary:active {
-    animation: bounce-pop 0.4s ease-out;
+    @apply bg-secondary-100 hover:bg-secondary-200 text-gray-900 font-semibold py-3 px-6 rounded-lg transition-all duration-200 border border-secondary-200 active:scale-95;
   }
 
   .btn-accent {
-    @apply bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+    @apply bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 active:scale-95;
   }
 
   .btn-accent:active {
-    animation: bounce-pop 0.4s ease-out;
+    animation: bounce-pop 0.3s ease-out;
   }
 
   /* Card Components */
   .card {
-    @apply bg-white rounded-xl shadow-md p-6 border border-secondary-200 transition-all duration-300 hover:shadow-lg hover:border-primary-200;
+    @apply bg-white rounded-xl shadow-md p-6 border border-secondary-200 transition-all duration-300 hover:shadow-lg;
+  }
+
+  .card:hover {
+    @apply border-primary-200;
   }
 
   /* Input Fields */
@@ -146,9 +154,9 @@
     @apply w-full px-4 py-3 border border-secondary-200 rounded-lg focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all;
   }
 
-  /* Badge Styles with Animation */
+  /* Badge Styles */
   .badge {
-    @apply inline-block px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 hover:scale-110;
+    @apply inline-block px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200;
   }
 
   .badge-primary {
@@ -156,7 +164,7 @@
   }
 
   .badge-primary:hover {
-    @apply bg-primary-200 shadow-md;
+    @apply bg-primary-200 scale-105;
   }
 
   .badge-accent {
@@ -164,34 +172,51 @@
   }
 
   .badge-accent:hover {
-    @apply bg-accent-200 shadow-md;
+    @apply bg-accent-200 scale-105;
   }
 
-  /* Icon Animation Classes */
+  /* Icon Animation on Click */
   .icon-clickable {
-    @apply cursor-pointer transition-all duration-300 hover:scale-110 active:scale-140;
+    @apply cursor-pointer transition-all duration-200 hover:scale-110;
   }
 
   .icon-clickable:active {
-    animation: bounce-pop 0.4s ease-out;
+    animation: bounce-pop 0.3s ease-out;
   }
 
-  /* Glow effect for interactive elements */
-  .glow-effect {
-    @apply transition-all duration-300;
+  /* Popup animations */
+  .animate-popup {
+    animation: popup 0.8s ease-out forwards;
   }
 
-  .glow-effect:hover {
-    @apply shadow-lg shadow-primary-400;
+  .animate-burst-1 {
+    animation: burst-1 0.8s ease-out forwards;
   }
 
-  /* Link animations */
+  .animate-burst-2 {
+    animation: burst-2 0.8s ease-out forwards;
+  }
+
+  .animate-burst-3 {
+    animation: burst-3 0.8s ease-out forwards;
+  }
+
+  .animate-burst-4 {
+    animation: burst-4 0.8s ease-out forwards;
+  }
+
+  /* Ripple animation */
+  .ripple-effect {
+    @apply relative overflow-hidden;
+  }
+
+  /* Link Hover Effects */
   a {
     @apply transition-colors duration-200;
   }
 
-  a:active {
-    animation: shake 0.3s ease-in-out;
+  a:hover {
+    @apply text-primary-600;
   }
 }
 
