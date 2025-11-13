@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useWallet } from '../contexts/WalletContext'
 import { useDID } from '../contexts/DIDContext'
-import { Fingerprint, Copy, Check, AlertCircle, ExternalLink } from 'lucide-react'
+import { Fingerprint, Copy, Check, AlertCircle, ExternalLink, Shield, Lock, Zap, ArrowRight } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const DIDManagement = () => {
@@ -25,164 +25,228 @@ const DIDManagement = () => {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  const features = [
+    {
+      icon: Lock,
+      title: 'Own & Control',
+      description: 'Your identity belongs to you, not a corporation'
+    },
+    {
+      icon: Shield,
+      title: 'Cryptographically Secure',
+      description: 'Verifiable and tamper-proof on blockchain'
+    },
+    {
+      icon: Zap,
+      title: 'Portable & Interoperable',
+      description: 'Works across any system that supports DIDs'
+    },
+  ]
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 pb-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">DID Management</h1>
-        <p className="mt-2 text-gray-600">
+        <h1 className="text-4xl font-bold text-dark-900 mb-2">DID Management</h1>
+        <p className="text-secondary-600 text-lg">
           Create and manage your Decentralized Identifier (DID) for self-sovereign identity
         </p>
       </div>
 
-      {/* Main Card */}
-      <div className="card">
-        {!account ? (
-          <div className="text-center py-12">
-            <AlertCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Wallet Not Connected
-            </h3>
-            <p className="text-gray-600 mb-6">
+      {/* Main Content */}
+      {!account ? (
+        <div className="card bg-gradient-to-br from-primary-50 to-accent-50 border-primary-200">
+          <div className="text-center py-16">
+            <div className="w-20 h-20 rounded-full bg-primary-500 text-white flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <AlertCircle className="w-10 h-10" />
+            </div>
+            <h3 className="text-2xl font-bold text-dark-900 mb-2">Wallet Not Connected</h3>
+            <p className="text-secondary-600 mb-8 max-w-md mx-auto text-lg">
               Connect your wallet to generate a Decentralized Identifier
             </p>
-            <button onClick={connectWallet} className="btn-primary">
+            <button onClick={connectWallet} className="btn-primary inline-flex items-center gap-2">
+              <Shield className="w-5 h-5" />
               Connect Wallet
             </button>
           </div>
-        ) : !did ? (
-          <div className="text-center py-12">
-            <Fingerprint className="w-16 h-16 text-primary-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Generate Your DID
-            </h3>
-            <p className="text-gray-600 mb-6 max-w-md mx-auto">
-              A Decentralized Identifier (DID) is a unique identifier that you own and control.
-              It's anchored on the blockchain and enables you to manage your digital identity.
-            </p>
-            <button
-              onClick={handleGenerateDID}
-              disabled={isLoading}
-              className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isLoading ? 'Generating...' : 'Generate DID'}
-            </button>
+        </div>
+      ) : !did ? (
+        <>
+          {/* Generate DID Card */}
+          <div className="card bg-gradient-to-br from-primary-600 to-primary-700 text-white border-0 shadow-xl">
+            <div className="text-center py-16">
+              <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/30 flex items-center justify-center mx-auto mb-6">
+                <Fingerprint className="w-10 h-10" />
+              </div>
+              <h3 className="text-3xl font-bold mb-3">Generate Your DID</h3>
+              <p className="text-primary-100 mb-8 max-w-md mx-auto text-lg">
+                A Decentralized Identifier is your unique, portable, and cryptographically verifiable identity on the blockchain.
+              </p>
+              <button
+                onClick={handleGenerateDID}
+                disabled={isLoading}
+                className="btn-primary inline-flex items-center gap-2 bg-white text-primary-600 hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Fingerprint className="w-5 h-5" />
+                {isLoading ? 'Generating...' : 'Generate DID Now'}
+              </button>
+            </div>
           </div>
-        ) : (
-          <div className="space-y-6">
-            {/* DID Display */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Your Decentralized Identifier
-              </label>
-              <div className="flex items-center space-x-2">
-                <div className="flex-1 p-4 bg-gray-50 rounded-lg border border-gray-200 font-mono text-sm break-all">
-                  {did}
+
+          {/* Features */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {features.map((feature, idx) => {
+              const Icon = feature.icon
+              return (
+                <div key={idx} className="card hover:shadow-lg transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h4 className="font-semibold text-dark-900 mb-2">{feature.title}</h4>
+                  <p className="text-secondary-600 text-sm">{feature.description}</p>
                 </div>
+              )
+            })}
+          </div>
+        </>
+      ) : (
+        <>
+          {/* DID Display Card */}
+          <div className="card border-accent-200 bg-gradient-to-br from-accent-50 to-white">
+            <div className="flex items-start justify-between mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-dark-900 mb-1">Your DID</h3>
+                <p className="text-secondary-600">Active and verified on blockchain</p>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-accent-100 text-accent-700 font-semibold text-sm">
+                <Check className="w-4 h-4" />
+                Active
+              </div>
+            </div>
+            <div className="flex items-center gap-2 mb-6">
+              <div className="flex-1 p-4 bg-dark-50 rounded-xl border border-secondary-200 font-mono text-sm break-all">
+                {did}
+              </div>
+              <button
+                onClick={() => copyToClipboard(did)}
+                className="p-3 hover:bg-primary-100 rounded-lg transition-all duration-200 text-primary-600 flex-shrink-0"
+                title="Copy DID"
+              >
+                {copied ? (
+                  <Check className="w-6 h-6" />
+                ) : (
+                  <Copy className="w-6 h-6" />
+                )}
+              </button>
+            </div>
+
+            {/* DID Details Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-t border-secondary-200">
+              <div>
+                <p className="text-sm font-semibold text-secondary-600 mb-2 uppercase tracking-wide">DID Method</p>
+                <p className="text-lg font-bold text-dark-900">ethr (Ethereum)</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-secondary-600 mb-2 uppercase tracking-wide">Verification Method</p>
+                <p className="text-sm text-dark-900 font-mono">EcdsaSecp256k1RecoveryMethod2020</p>
+              </div>
+              <div className="md:col-span-2">
+                <p className="text-sm font-semibold text-secondary-600 mb-2 uppercase tracking-wide">Controller Address</p>
+                <p className="text-sm text-dark-900 font-mono break-all">{account}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* DID Document */}
+          {didDocument && (
+            <div className="card">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-lg font-bold text-dark-900">DID Document</h4>
                 <button
-                  onClick={() => copyToClipboard(did)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                  title="Copy DID"
+                  onClick={() => copyToClipboard(JSON.stringify(didDocument, null, 2))}
+                  className="text-sm text-primary-600 hover:text-primary-700 flex items-center gap-2 transition-colors"
                 >
-                  {copied ? (
-                    <Check className="w-5 h-5 text-green-600" />
-                  ) : (
-                    <Copy className="w-5 h-5 text-gray-600" />
-                  )}
+                  <Copy className="w-4 h-4" />
+                  Copy JSON
                 </button>
               </div>
-            </div>
-
-            {/* DID Document */}
-            {didDocument && (
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    DID Document
-                  </label>
-                  <button
-                    onClick={() => copyToClipboard(JSON.stringify(didDocument, null, 2))}
-                    className="text-sm text-primary-600 hover:text-primary-700 flex items-center space-x-1"
-                  >
-                    <Copy className="w-4 h-4" />
-                    <span>Copy JSON</span>
-                  </button>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 overflow-x-auto">
-                  <pre className="text-xs text-gray-700">
-                    {JSON.stringify(didDocument, null, 2)}
-                  </pre>
-                </div>
-              </div>
-            )}
-
-            {/* DID Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-gray-200">
-              <div>
-                <p className="text-sm font-medium text-gray-700 mb-1">DID Method</p>
-                <p className="text-sm text-gray-600">ethr (Ethereum)</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-700 mb-1">Status</p>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                  Active
-                </span>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-700 mb-1">Verification Method</p>
-                <p className="text-sm text-gray-600">EcdsaSecp256k1RecoveryMethod2020</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-700 mb-1">Controller</p>
-                <p className="text-sm text-gray-600 font-mono break-all">{account}</p>
+              <div className="p-4 bg-dark-50 rounded-xl border border-secondary-200 overflow-x-auto">
+                <pre className="text-xs text-dark-900 font-mono">
+                  {JSON.stringify(didDocument, null, 2)}
+                </pre>
               </div>
             </div>
+          )}
 
-            {/* Info Box */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <div className="flex items-start space-x-3">
-                <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5" />
-                <div className="flex-1">
-                  <h4 className="text-sm font-medium text-blue-900 mb-1">
-                    About Decentralized Identifiers
-                  </h4>
-                  <p className="text-sm text-blue-800">
-                    Your DID is unique, portable, and cryptographically verifiable. It enables you to:
-                  </p>
-                  <ul className="mt-2 text-sm text-blue-800 list-disc list-inside space-y-1">
-                    <li>Own and control your digital identity</li>
-                    <li>Issue and manage verifiable credentials</li>
-                    <li>Prove your identity without revealing unnecessary information</li>
-                    <li>Interact with any system that supports DIDs</li>
-                  </ul>
+          {/* Benefits */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {features.map((feature, idx) => {
+              const Icon = feature.icon
+              return (
+                <div key={idx} className="card hover:shadow-lg transition-all duration-300">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h4 className="font-semibold text-dark-900 mb-2">{feature.title}</h4>
+                  <p className="text-secondary-600 text-sm">{feature.description}</p>
                 </div>
+              )
+            })}
+          </div>
+
+          {/* Info Box */}
+          <div className="card bg-gradient-to-br from-primary-50 to-accent-50 border-primary-200">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-lg bg-primary-500 text-white flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-dark-900 mb-2">What You Can Do With Your DID</h4>
+                <ul className="space-y-2 text-sm text-secondary-700">
+                  <li className="flex items-center gap-2">
+                    <ArrowRight className="w-4 h-4 text-primary-600" />
+                    Issue and manage verifiable credentials
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <ArrowRight className="w-4 h-4 text-primary-600" />
+                    Prove your identity without revealing unnecessary data
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <ArrowRight className="w-4 h-4 text-primary-600" />
+                    Interact with systems that support DIDs
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <ArrowRight className="w-4 h-4 text-primary-600" />
+                    Control your digital presence independently
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </>
+      )}
 
-      {/* Additional Resources */}
-      <div className="card bg-gray-50">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Learn More</h3>
-        <div className="space-y-2">
+      {/* Resources */}
+      <div className="card">
+        <h3 className="text-lg font-bold text-dark-900 mb-4">Learn More</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <a
             href="https://www.w3.org/TR/did-core/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center space-x-2 text-sm text-primary-600 hover:text-primary-700"
+            className="flex items-center justify-between p-4 rounded-lg bg-primary-50 hover:bg-primary-100 border border-primary-200 transition-all duration-200 group"
           >
-            <span>W3C DID Specification</span>
-            <ExternalLink className="w-4 h-4" />
+            <span className="text-sm font-semibold text-primary-700">W3C DID Specification</span>
+            <ExternalLink className="w-4 h-4 text-primary-600 group-hover:translate-x-1 transition-transform" />
           </a>
           <a
             href="https://www.w3.org/TR/vc-data-model/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center space-x-2 text-sm text-primary-600 hover:text-primary-700"
+            className="flex items-center justify-between p-4 rounded-lg bg-accent-50 hover:bg-accent-100 border border-accent-200 transition-all duration-200 group"
           >
-            <span>Verifiable Credentials Data Model</span>
-            <ExternalLink className="w-4 h-4" />
+            <span className="text-sm font-semibold text-accent-700">VC Data Model</span>
+            <ExternalLink className="w-4 h-4 text-accent-600 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
       </div>
