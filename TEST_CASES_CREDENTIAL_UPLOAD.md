@@ -42,6 +42,9 @@ This document contains comprehensive test cases for the Credential Upload featur
 - Email: john.doe@university.edu
 - Issuance Date: (Today's date)
 - Expiration Date: 2026-12-31
+- Test PDF File: sample_credential.pdf
+- File Size: ~50 KB
+- Supported Formats: JSON, PDF, DOC, DOCX
 
 ---
 
