@@ -4,8 +4,8 @@ This document explains how the frontend connects to the backend API.
 
 ## Architecture
 
-- **Frontend**: Deployed on Vercel
-- **Backend**: Deployed on Render
+- **Frontend**: React application running on localhost
+- **Backend**: Express server running on localhost
 - **Connection**: Frontend uses environment variables to connect to backend URL
 
 ## Configuration Files
@@ -27,7 +27,7 @@ This document explains how the frontend connects to the backend API.
 
 - **`server/server.js`**: Express server with CORS configuration
   - Reads `ALLOWED_ORIGINS` from environment variables
-  - Allows requests from Vercel frontend domain
+  - Allows requests from localhost for development
   - Supports multiple origins (comma-separated)
 
 ## Usage Example
@@ -50,14 +50,14 @@ const checkHealth = async () => {
 
 ### Frontend (.env)
 ```env
-VITE_API_BASE_URL=https://your-backend.onrender.com
+VITE_API_BASE_URL=http://localhost:3001
 ```
 
 ### Backend (.env)
 ```env
-ALLOWED_ORIGINS=https://your-frontend.vercel.app
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
 PORT=3001
-NODE_ENV=production
+NODE_ENV=development
 ```
 
 ## Adding New API Endpoints
@@ -112,13 +112,5 @@ npm run dev
    - Frontend should connect to `http://localhost:3001`
    - Check browser console for any CORS errors
    - Test API calls in Network tab
-
-## Deployment Checklist
-
-- [ ] Backend deployed on Render
-- [ ] Frontend deployed on Vercel
-- [ ] `VITE_API_BASE_URL` set in Vercel environment variables
-- [ ] `ALLOWED_ORIGINS` set in Render environment variables (include Vercel URL)
-- [ ] Test API connection from deployed frontend
-- [ ] Verify CORS headers in browser Network tab
+   - Backend health check should return status: 'ok'
 
