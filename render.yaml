@@ -1,0 +1,23 @@
+# Render Blueprint Configuration
+# This file configures the backend service for Render deployment
+# Documentation: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: heightechx-backend
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        # Update this with your actual Vercel frontend URL
+        value: https://heightech-x.vercel.app
+      # Add your Supabase credentials if needed
+      # - key: SUPABASE_URL
+      #   sync: false
+      # - key: SUPABASE_SERVICE_ROLE_KEY
+      #   sync: false
+
