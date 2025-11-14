@@ -1,7 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useCredential } from '../contexts/CredentialContext'
 import { ArrowLeft, Copy, Download, ExternalLink, Check, FileJson, Shield, Lock, Calendar } from 'lucide-react'
-import toast from 'react-hot-toast'
 import { useState } from 'react'
 
 const CredentialView = () => {
