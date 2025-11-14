@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useWallet } from '../contexts/WalletContext'
 import { useDID } from '../contexts/DIDContext'
 import { useCredential } from '../contexts/CredentialContext'
+import { useIPFS } from '../contexts/IPFSContext'
 import { Shield, Fingerprint, FileText, CheckCircle, AlertCircle, TrendingUp, ArrowRight, Lock, Zap, Award, BarChart3, Eye } from 'lucide-react'
+import toast from 'react-hot-toast'
 import WelcomeCard from '../components/WelcomeCard'
 import OnboardingProgress from '../components/OnboardingProgress'
 
@@ -10,6 +12,17 @@ const Dashboard = () => {
   const { account, connectWallet } = useWallet()
   const { did } = useDID()
   const { credentials } = useCredential()
+  const { initializeIPFS, ipfs } = useIPFS()
+
+  useEffect(() => {
+    const initIPFS = async () => {
+      if (!ipfs) {
+        await initializeIPFS()
+        toast.success('IPFS initialized successfully!')
+      }
+    }
+    initIPFS()
+  }, [])
 
   const stats = [
     {
@@ -34,6 +47,14 @@ const Dashboard = () => {
       icon: Shield,
       color: account ? 'text-accent-600' : 'text-secondary-600',
       bgColor: account ? 'bg-accent-100' : 'bg-secondary-100',
+      gradient: 'from-accent-500 to-accent-600'
+    },
+    {
+      name: 'IPFS Status',
+      value: ipfs ? 'Active' : 'Initializing',
+      icon: Award,
+      color: ipfs ? 'text-accent-600' : 'text-secondary-600',
+      bgColor: ipfs ? 'bg-accent-100' : 'bg-secondary-100',
       gradient: 'from-accent-500 to-accent-600'
     },
   ]
@@ -86,7 +107,7 @@ const Dashboard = () => {
       {/* Stats Grid */}
       <div>
         <h3 className="text-xl font-bold mb-4" style={{color: 'var(--text)', borderLeft: '4px solid rgba(0,255,160,0.08)', paddingLeft: '10px'}}>Quick Stats</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat) => {
             const Icon = stat.icon
             return (

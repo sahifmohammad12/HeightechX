@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useWallet } from '../contexts/WalletContext'
 import { useDID } from '../contexts/DIDContext'
 import { useIPFS } from '../contexts/IPFSContext'
@@ -8,8 +8,25 @@ import toast from 'react-hot-toast'
 const Settings = () => {
   const { account, disconnectWallet } = useWallet()
   const { did, didDocument } = useDID()
-  const { initializeIPFS, ipfs } = useIPFS()
+  const { initializeIPFS, ipfs, isInitializing } = useIPFS()
   const [isInitializingIPFS, setIsInitializingIPFS] = useState(false)
+
+  useEffect(() => {
+    const autoInitIPFS = async () => {
+      if (!ipfs && !isInitializing) {
+        setIsInitializingIPFS(true)
+        try {
+          await initializeIPFS()
+          toast.success('IPFS auto-initialized')
+        } catch (error) {
+          console.error('Error auto-initializing IPFS:', error)
+        } finally {
+          setIsInitializingIPFS(false)
+        }
+      }
+    }
+    autoInitIPFS()
+  }, [])
 
   const handleInitializeIPFS = async () => {
     setIsInitializingIPFS(true)
@@ -114,41 +131,41 @@ const Settings = () => {
       </div>
 
       {/* IPFS Settings */}
-      <div className="card">
+      <div className="card" style={{ background: 'rgba(0, 0, 0, 0.9)', boxShadow: '0 0 40px rgba(0, 255, 200, 0.2), inset 0 0 15px rgba(0, 255, 200, 0.05)', border: '2px solid var(--primary)' }}>
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 text-white flex items-center justify-center" style={{ boxShadow: '0 0 20px rgba(0, 255, 200, 0.5)' }}>
             <Database className="w-6 h-6" />
           </div>
-          <h2 className="text-2xl font-bold text-dark-900">IPFS Configuration</h2>
+          <h2 className="text-2xl font-bold text-white" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>IPFS Configuration</h2>
         </div>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-dark-900 mb-3 uppercase tracking-wide">
+            <label className="block text-sm font-semibold text-white mb-3 uppercase tracking-wide" style={{ textShadow: '0 0 10px rgba(0, 255, 200, 0.5)' }}>
               IPFS Status
             </label>
             {ipfs ? (
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 font-semibold text-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-500 text-white font-semibold text-sm shadow-lg">
                 <CheckCircle className="w-4 h-4" />
-                Connected
+                Active & Connected
               </div>
             ) : (
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-100 text-secondary-700 font-semibold text-sm">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-500 text-white font-semibold text-sm shadow-lg">
                 <AlertCircle className="w-4 h-4" />
-                Not Initialized
+                {isInitializingIPFS ? 'Initializing...' : 'Initializing'}
               </div>
             )}
           </div>
-          {!ipfs && (
+          {!ipfs && !isInitializingIPFS && (
             <button
               onClick={handleInitializeIPFS}
               disabled={isInitializingIPFS}
-              className="btn-primary disabled:opacity-50 font-semibold w-full"
+              className="px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 hover:from-primary-600 hover:to-accent-600 text-white font-semibold rounded-lg transition-all disabled:opacity-50 w-full"
             >
               {isInitializingIPFS ? 'Initializing...' : 'Initialize IPFS'}
             </button>
           )}
-          <div className="p-4 bg-primary-50 rounded-xl border border-primary-200">
-            <p className="text-sm text-primary-800">
+          <div className="p-4 rounded-xl border border-primary-500" style={{ background: 'rgba(0, 255, 200, 0.05)' }}>
+            <p className="text-sm text-white">
               IPFS is used for decentralized file storage. Your files are stored on the InterPlanetary File System for secure, distributed access.
             </p>
           </div>
